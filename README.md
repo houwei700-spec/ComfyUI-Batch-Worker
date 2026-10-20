@@ -23,4 +23,7 @@ Task history, uploaded assets, output videos, local endpoint settings, logs, and
 - `templates/`: standard workflow templates.
 - `prompt_lab/workflow*.json`: prompt-lab test and finished-video workflow definitions.
 - `tests/`: regression and integration test sources.
+## Main page screenshot
+
+![ComfyUI Batch Worker main page](docs/screenshots/main-page.png)
 
