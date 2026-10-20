@@ -1,0 +1,274 @@
+{
+  "5": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "6": {
+    "inputs": {
+      "fl2va_model": "无",
+      "ref2va_model": "minimax_h3_ref2va_int8_convrot.safetensors",
+      "text_encoder": "qwen3vl_32b_minimax_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
+      "video_vae": "minimax_h3_video_vae_int8_convrot.safetensors",
+      "audio_vae": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "MiniMaxH3EasyLoader",
+    "_meta": {
+      "title": "MiniMax H3 Easy 加载器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "mode": "reference",
+      "prompt": "subject_definitions:\r\n<Subject 1> is the young Asian female presenter whose biological identity, facial bone structure, features, and exact hairstyle strictly come 100% from __MINIMAX_H3_REF_1__, whose apparel silhouette, cut, and details strictly come from __MINIMAX_H3_REF_2__, and whose body motion and posture transitions are executed naturally (completely isolated from any unwanted apparel or facial artifacts).\r\n__MINIMAX_H3_REF_1__ is the person identity reference, defining all appearance details including facial features, bone structure, makeup, hair color, and exact hairstyle (every visual detail of the woman's face, makeup, and hairstyle/haircut is defined entirely by __MINIMAX_H3_REF_1__ and must be preserved faithfully with zero style drift or loose hair hallucination).\r\n__MINIMAX_H3_REF_2__ is the apparel reference, defining the outerwear silhouette, cut, collar, placket, pockets, quilting pattern, fabric texture, original color, and crucially the exact frontal wearing, collar structure, and placket closure state as displayed in the frontal photo of __MINIMAX_H3_REF_2__.\r\n__MINIMAX_H3_REF_3__ is the strict first-frame keyframe anchor and scene reference, defining the European urban tree-lined avenue, French stone architectural facades, tall plane trees, golden fallen leaves on the sidewalk, and natural autumn afternoon daylight.\r\n\r\nsummary:\r\n[keyframe completion + reference generation] The target video is a 9-second cinematic fashion montage set on an autumn European urban tree-lined avenue (__MINIMAX_H3_REF_3__) blanketed in golden leaves, structured into a 6-shot sequence. The opening frame of [Shot 1] at 00:00.000 strictly replicates the camera viewpoint, lighting, and spatial composition of __MINIMAX_H3_REF_3__ with 100% fidelity. Wearing the outerwear from __MINIMAX_H3_REF_2__ matching 100% of its collar structure and placket closure state from __MINIMAX_H3_REF_2__, <Subject 1> (defined by __MINIMAX_H3_REF_1__) showcases fluid walking, glancing back, holding an autumn leaf, and tucking hair behind her ear in balanced natural daylight (5600K). Hand interaction safety rules enforced: inserting hands into pockets is strictly prohibited; grabbing or tugging pockets is strictly prohibited; all hand movements remain completely outside of pockets with hands gently holding the tote bag strap, swinging naturally at sides, or gracefully tucking hair; rolling up sleeves is strictly prohibited; altering collar structure is strictly prohibited; multi-shot sequence, f/2.0 shallow depth of field, no spoken dialogue, no subtitles, no watermarks.\r\n\r\nretention_analysis:\r\n<Subject 1>: fully_preserved - facial bone structure, biological features, makeup, and exact hairstyle from __MINIMAX_H3_REF_1__ are faithfully preserved across all shots without style drift.\r\n__MINIMAX_H3_REF_1__: fully_preserved - facial bone structure, biological features, makeup, and exact hairstyle are preserved faithfully.\r\n__MINIMAX_H3_REF_2__: fully_preserved - apparel silhouette, cut, quilting pattern, pockets, hardware, original fabric color/texture, and especially the exact collar shape and placket closure state are preserved 100% identical to the frontal reference of __MINIMAX_H3_REF_2__ without altering the garment's original design or wearing style.\r\n__MINIMAX_H3_REF_3__ ([Shot 1] first frame & scene environment): fully_preserved - European avenue architecture, plane trees, and golden leaf carpet are preserved consistently across all camera angles.\r\nNegative constraints enforced: inserting hands into pockets is strictly prohibited; grabbing or pulling pockets is strictly prohibited; rolling up or bunching sleeves is strictly prohibited; zero hand occlusion or pocket clipping; altering collar structure is strictly prohibited; facial identity drift or melting is strictly prohibited; no subtitles, no watermarks.\r\n\r\ndetailed_description:\r\nThe target video adopts a cinematic autumn daylight aesthetic: f/2.0–f/2.5 shallow depth of field, subtle handheld floating feel, 5600K balanced daylight, soft highlights, transparent shadows, zero subtitles or watermarks. (Global negative constraints: inserting hands into pockets is strictly prohibited; grabbing or pulling pockets is strictly prohibited; rolling up or bunching sleeves is strictly prohibited; zero hand occlusion or pocket clipping; altering collar structure is strictly prohibited; facial distortion is strictly prohibited).\r\n[Shot 1] 00:00.000 - 00:01.500: Full shot from behind. The opening frame at 00:00.000 strictly replicates the 1:1 camera viewpoint, lighting, and composition of __MINIMAX_H3_REF_3__. <Subject 1> (she properly wears the exact outerwear from __MINIMAX_H3_REF_2__ with both arms inserted completely inside the sleeves (faithfully maintaining 100% of its cut, silhouette, original color, fabric texture, quilting pattern, pockets, and hardware details exactly as shown in __MINIMAX_H3_REF_2__; with both sleeves remaining fully extended down to the wrists, strictly never rolled up or pushed up), with its collar structure and placket closure state strictly matching 100% of the real-wear frontal reference in __MINIMAX_H3_REF_2__ without modifying its original collar style or closure degree; paired with black skinny pants and black knee-high leather boots; faithfully maintaining 100% of her facial features, makeup, and exact hairstyle directly as shown in __MINIMAX_H3_REF_1__, carrying a soft brown leather tote bag on her left shoulder) walks slowly forward along the leaf-strewn sidewalk, coat hem swaying gently with her footsteps.\r\n[Shot 2] At 00:01.500 - 00:02.500: Medium-full shot from the side. Cutting to a side three-quarter angle with the lower edge preserving the shins, <Subject 1> turns smoothly to face slightly left-forward; her left hand rests gently and naturally against the leather strap of her shoulder tote bag, right hand relaxed at her side swinging subtly with her stride (strictly keeping hands outside of pockets, zero pocket insertion), and looks back over her right shoulder toward the camera with a warm, subtle smile without showing teeth.\r\n[Shot 3] At 00:02.500 - 00:03.800: Medium shot from waist up. Cutting to a waist-up medium framing, she gently holds a golden plane tree leaf in both hands, gazing at it quietly with serene poise, the tote bag resting naturally on her left shoulder; she slowly lifts her eyes toward the camera, lowering the leaf gracefully with both hands, transitioning into a gentle, soft closed-lip smile.\r\n[Shot 4] At 00:03.800 - 00:05.500: Full shot facing the camera. Cutting back to a full-length shot, <Subject 1> walks forward gracefully facing the lens at an even, steady pace; both arms swing gently and naturally at her sides matching her walking rhythm with relaxed, open fingers (strictly avoiding inserting hands into pockets, strictly zero pocket bulging or pulling), smiling radiantly as afternoon plane tree shadows create natural dappled sunlight across her face and outerwear.\r\n[Shot 5] At 00:05.500 - 00:07.000: Three-quarters medium-full shot. Cutting to a three-quarter angle, <Subject 1> smoothly lifts her right hand directly from her side to gracefully tuck a stray hair strand behind her ear (executed as a fluid, direct arm motion without reaching into or pulling out of any pocket), eyes reflective and soft, before resting her hand calmly back at her side; her left hand gently rests against the tote bag strap.\r\n[Shot 6] At 00:07.000 - 00:09.000: Fixed medium-full shot facing the camera. Cutting to a stable front-facing medium-full framing, <Subject 1> crosses her arms gently and comfortably across her chest (right hand resting flat and lightly on her left upper arm, hands relaxed without gripping fabric), transitioning from a warm gentle smile to a calm, poised closed-lip smile, holding the final stable posture until the end.\r\n\r\noverall_soundscape:\r\nAutumn outdoor avenue breeze gently rustling dry fallen leaves, soft rhythmic leather boot footsteps on leaves, and distant muffled city traffic hum.\r\n\r\nnon_diegetic_music:\r\nA lyrical, warm acoustic guitar and cello melody with gentle cinematic nostalgia.\n",
+      "resolution": "768P",
+      "aspect_ratio": "9:16",
+      "width": 1344,
+      "height": 768,
+      "seconds": 9,
+      "advanced": true,
+      "fps": 24,
+      "keyframe_role": "first",
+      "ref_image_size": "2k",
+      "reference_mention_mode": "index",
+      "prompt_optimizer_settings": false,
+      "prompt_optimizer_scene_guide": "none",
+      "h3_bundle": [
+        "6",
+        0
+      ],
+      "media_1": [
+        "18",
+        0
+      ],
+      "media_type_1": "image",
+      "media_2": [
+        "35",
+        0
+      ],
+      "media_type_2": "image",
+      "media_3": [
+        "36",
+        0
+      ],
+      "media_type_3": "image",
+      "prompt_optimizer_resources": "[{\"type\":\"image\",\"tag\":\"<Picture 1>\",\"name\":\"南汐女装_01.jpg\",\"asset\":{\"filename\":\"南汐女装_01.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 2>\",\"name\":\"3b34417f7272e5c0143cb0584efbefc7.jpg\",\"asset\":{\"filename\":\"3b34417f7272e5c0143cb0584efbefc7.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 3>\",\"name\":\"城市林荫道.jpg\",\"asset\":{\"filename\":\"城市林荫道.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 4>\",\"name\":\"图片节点 6 (1) (1).png\",\"asset\":{\"filename\":\"图片节点 6 (1) (1).png\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 5>\",\"name\":\"fede9c17c610f7ef1d0ccc23cbde047e449cbf5eb3d753cac50259a1e8fddcd7.jpg\",\"asset\":{\"filename\":\"fede9c17c610f7ef1d0ccc23cbde047e449cbf5eb3d753cac50259a1e8fddcd7.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 6>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}}]",
+      "prompt_optimizer_marker": "{}",
+      "prompt_optimizer_prompt_connected": false
+    },
+    "class_type": "MiniMaxH3Easy",
+    "_meta": {
+      "title": "MiniMax H3 Easy"
+    }
+  },
+  "8": {
+    "inputs": {
+      "h3_context": [
+        "7",
+        1
+      ]
+    },
+    "class_type": "MiniMaxH3EasyOutput",
+    "_meta": {
+      "title": "MiniMax H3 Easy 输出"
+    }
+  },
+  "9": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 0.74,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "10": {
+    "inputs": {
+      "noise": [
+        "14",
+        0
+      ],
+      "guider": [
+        "11",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "8",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model": [
+        "9",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "14": {
+    "inputs": {
+      "noise_seed": 961252991681587
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "15": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "16": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "一采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "5",
+        0
+      ],
+      "audio": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "18": {
+    "inputs": {
+      "image": "南汐女装_01.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "35": {
+    "inputs": {
+      "image": "3b34417f7272e5c0143cb0584efbefc7.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "36": {
+    "inputs": {
+      "image": "城市林荫道.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "94": {
+    "inputs": {
+      "anything": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "291": {
+    "inputs": {
+      "images": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  }
+}

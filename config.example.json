@@ -1,0 +1,15 @@
+{
+  "servers": [
+    {
+      "id": "srv_local_8188",
+      "name": "Local ComfyUI",
+      "url": "http://127.0.0.1:8188",
+      "enabled": true
+    }
+  ],
+  "active_server_id": "srv_local_8188",
+  "workflow_template_path": "template_workflow.json",
+  "task_file": "tasks.csv",
+  "poll_interval_seconds": 5,
+  "max_retries": 2
+}

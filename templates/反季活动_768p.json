@@ -1,0 +1,274 @@
+{
+  "5": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "6": {
+    "inputs": {
+      "fl2va_model": "无",
+      "ref2va_model": "minimax_h3_ref2va_int8_convrot.safetensors",
+      "text_encoder": "qwen3vl_32b_minimax_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
+      "video_vae": "minimax_h3_video_vae_int8_convrot.safetensors",
+      "audio_vae": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "MiniMaxH3EasyLoader",
+    "_meta": {
+      "title": "MiniMax H3 Easy 加载器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "mode": "reference",
+      "prompt": "subject_definitions:\r\n<Subject 1> is the young Asian female presenter whose biological identity, facial bone structure, features, and exact hairstyle strictly come 100% from __MINIMAX_H3_REF_1__, whose apparel silhouette, cut, and details strictly come from __MINIMAX_H3_REF_2__, and whose body motion and posture transitions are executed naturally (completely isolated from any unwanted apparel or facial artifacts). She is the on-screen speaking presenter (S2).\r\n__MINIMAX_H3_REF_1__ is the person identity reference, defining all appearance details including facial features, bone structure, makeup, hair color, and exact hairstyle (every visual detail of the woman's face, makeup, and hairstyle/haircut is defined entirely by __MINIMAX_H3_REF_1__ and must be preserved faithfully with zero style drift or loose hair hallucination).\r\n__MINIMAX_H3_REF_2__ is the apparel reference, defining the outerwear silhouette, cut, collar, placket, pockets, quilting pattern, fabric texture, original color, and crucially the exact frontal wearing, collar structure, and placket closure state as displayed in the frontal photo of __MINIMAX_H3_REF_2__.\r\n__MINIMAX_H3_REF_3__ is the strict first-frame keyframe anchor and scene reference. Its exact camera viewpoint, angle, lighting, and spatial composition define the opening frame of [Shot 1] at 00:00.000 with 100% geometric fidelity: a massive industrial wholesale warehouse outlet with towering red steel pallet racks stacked high with boxed goods on both sides, central rows of circular industrial pendant lights suspended from corrugated metal roof beams in one-point linear perspective, polished reflective gray concrete floor with green circular floor markers, and a clothing discount island in the midground where shoppers in winter coats gather.\r\nThe off-screen female speaker is an unseen, curious shopper who speaks off-camera; she is speaker (S1) with voice audio only and zero on-screen presence.\r\n\r\nsummary:\r\n[keyframe completion + reference generation] The target video is a 10-second realistic, energetic e-commerce promotional talking video inside a spacious warehouse discount store (__MINIMAX_H3_REF_3__), structured into a coherent 3-shot sequence matching real narrative drama. In the opening frame of [Shot 1] at 00:00.000, presenter <Subject 1> (speaker S2, appearance from __MINIMAX_H3_REF_1__, wearing outerwear from __MINIMAX_H3_REF_2__ matching 100% of its collar structure and placket closure state from __MINIMAX_H3_REF_2__) is already physically present in the center midground before the discount island, actively examining clothes with her back to the camera alongside background shoppers, perfectly replicating __MINIMAX_H3_REF_3__ with 100% geometric fidelity. The camera pushes steadily forward in a first-person perspective. Off-screen customer S1 asks from 00:00.400 to 00:01.200: '都在抢什么呢？'. Hearing the call, S2 promptly releases the clothes and smoothly turns around between 00:01.000 and 00:01.600, fully facing front toward the camera by 00:01.600. Completely facing forward, she walks two steps toward the lens and delivers with clear lip-sync from 00:01.600 to 00:03.200: '都在抢这款报款羽绒服！', then pauses at close-medium framing to announce the steep discount with open hands from 00:03.500 to 00:04.800. At 00:05.500, [Shot 2] executes a precise hard cut to a tight upper-body torso close-up of <Subject 1> actively wearing the outerwear on her body, pressing the fluffy down filling on her chest/arm to demonstrate instant rebound on her worn silhouette with professional voiceover narration from 00:05.800 to 00:07.400. At 00:08.000, [Shot 3] executes a clean hard cut back to a medium shot above the knees as S2 delivers an urgent, enthusiastic call to action with locked eye contact, concluding with a 0.5-second poised breathing pause. Rigid turnaround and wearing rules enforced: S2 must fully finish turning around and face front before or right as she begins speaking '都在抢这款报款羽绒服！', strictly prohibited from delaying the turn or speaking while facing away; the outerwear strictly remains worn on her living body throughout all shots; inserting hands into pockets is strictly prohibited; rolling up sleeves is strictly prohibited; altering collar structure is strictly prohibited; no subtitles, no watermarks.\r\n\r\nretention_analysis:\r\n<Subject 1> (appears across all shots): fully_preserved - facial bone structure, biological features, makeup, native hairstyle, and body proportions from __MINIMAX_H3_REF_1__ are faithfully preserved across all shots without altering hair style or length; she is physically established in scene from 00:00.000, executing an early, prompt turnaround between 00:01.000 and 00:01.600 to completely face the camera while speaking.\r\n__MINIMAX_H3_REF_1__: fully_preserved - facial bone structure, features, makeup, and original hairstyle are preserved faithfully.\r\n__MINIMAX_H3_REF_2__: fully_preserved - apparel silhouette, cut, quilting pattern, pockets, hardware, original fabric color/texture, and especially the exact collar shape and placket closure state are preserved 100% identical to the frontal reference of __MINIMAX_H3_REF_2__ without altering the garment's original design or wearing style; crucially, the garment strictly remains continuously worn on <Subject 1>'s living body across all shots including close-ups, with body volume, shoulder line, and sleeve fitting preserved, strictly never shown as detached, hung, or flat-lay clothing.\r\n__MINIMAX_H3_REF_3__ ([Shot 1] first frame & scene environment): fully_preserved - warehouse aisle perspective, red pallet racks, overhead circular industrial pendant lights, polished concrete flooring, and discount rack layout are preserved 100% as the scene environment and opening frame.\r\nNegative constraints enforced: delaying the turnaround until after or late into the spoken line is strictly prohibited; speaking while facing away from the camera is strictly prohibited, <Subject 1> must be fully facing front toward the lens before speaking; displaying the garment as detached, hung on a hanger, flat-lay, or un-worn clothing is strictly prohibited; character pop-in or sudden appearance out of thin air is strictly prohibited; inserting hands into pockets is strictly prohibited; grabbing or tugging pockets is strictly prohibited; rolling up or bunching sleeves is strictly prohibited; overlapping dialogue or speech rushing is strictly prohibited; speaker crosstalk or mouth movement during off-screen lines is strictly prohibited; altering collar structure is strictly prohibited; zero hand occlusion or pocket clipping; altering camera composition of __MINIMAX_H3_REF_3__ is strictly prohibited; no subtitles, no watermarks.\r\n\r\ndetailed_description:\r\nThe target video adopts a realistic documentary livestream retail cinematography style with neutral cool fluorescent warehouse lighting, translucent natural skin tones, and dynamic, steady handheld motion. The 10-second narrative unfolds seamlessly across 3 precisely timed shots without subtitles, UI overlays, watermarks, or facial distortion. (Global negative constraints: delaying the turn or speaking with back turned is strictly prohibited, <Subject 1> must be completely front-facing by 00:01.600; displaying the outerwear as un-worn, flat-lay, or hanging on a hanger is strictly prohibited, the jacket must strictly remain worn on <Subject 1>'s body across all shots; character pop-in is strictly prohibited; inserting hands into pockets is strictly prohibited; grabbing or pulling pockets is strictly prohibited; rolling up or bunching sleeves is strictly prohibited; overlapping speech lines is strictly prohibited; speaker crosstalk is strictly prohibited).\r\n[Shot 1] 00:00.000 - 00:05.500: The opening frame at 00:00.000 strictly and flawlessly replicates the exact 1:1 camera viewpoint, lighting, and center-aisle composition of __MINIMAX_H3_REF_3__. Right from the very first frame at 00:00.000, <Subject 1> is already physically present in the midground center before the clothing discount table (naturally integrated into the crowd scene from the opening frame with zero pop-in or sudden spawning). (She properly wears the exact outerwear from __MINIMAX_H3_REF_2__ with both arms inserted completely inside the sleeves (faithfully maintaining 100% of its cut, silhouette, original color, fabric texture, quilting pattern, pockets, and hardware details exactly as shown in __MINIMAX_H3_REF_2__; with both sleeves remaining fully extended down to the wrists, strictly never rolled up or pushed up), with its collar structure and placket closure state strictly matching 100% of the real-wear frontal reference in __MINIMAX_H3_REF_2__ without modifying its original collar style or closure degree; paired with black skinny pants and black knee-high leather boots; faithfully maintaining 100% of her facial features, makeup, and exact hairstyle directly as shown in __MINIMAX_H3_REF_1__). At 00:00.000, <Subject 1> stands facing away from the camera, her hands gently touching and browsing the hanging down jackets on the discount rack. As the camera steadily glides forward along the center aisle in a first-person perspective, the off-screen curious female voice (S1) calls out from the camera perspective from 00:00.400 to 00:01.200: <d>[Chinese] 都在抢什么呢？</d>. Hearing the call, <Subject 1> immediately releases the clothes and executes an agile, prompt physical turnaround to the right between 00:01.000 and 00:01.600. Crucial timing rule: by 00:01.600, <Subject 1> has fully and completely finished turning around, with her entire torso and face fully oriented forward toward the camera (strictly prohibited from delaying the turnaround or speaking while facing away). Fully front-facing the camera with eye contact locked directly onto the lens, <Subject 1> takes two steady steps forward toward the camera and articulates clearly and warmly with precise lip-sync as speaker (S2) from 00:01.600 to 00:03.200: <d>[Chinese] 都在抢这款报款羽绒服！</d>. At 00:03.200, she finishes speaking and cleanly closes her lips. From 00:03.200 to 00:03.500, she steps into a close-medium framing, gently opening both hands outward to waist level with palms facing upward in an excited commercial gesture (hands completely outside of pockets, zero pocket contact). From 00:03.500 to 00:04.800, her eyes sparkle with delight as she articulates with expressive, buoyant lip-sync: <d>[Chinese] 反季特卖，三折都不要！</d>. At 00:04.800, she cleanly closes her lips, holding a 0.7-second silent acoustic and visual buffer.\r\n[Shot 2] At 00:05.500, a clean hard cut frames a tight upper-body torso close-up of <Subject 1> (framed from the lower neck and shoulders down to the waist). Crucially, <Subject 1> remains visibly, properly, and continuously wearing the exact outerwear from __MINIMAX_H3_REF_2__ on her living body (her shoulders, chest volume, and torso are unmistakably inside the garment, confirming with 100% clarity that the down jacket is being actively worn on her figure matching 100% of its closed collar and placket state from __MINIMAX_H3_REF_2__, strictly never displayed as flat, hung, or detached clothing). Soft overhead warehouse lighting highlights the lofty volume and smooth surface texture of the down jacket on her body. Her right hand raises naturally across her chest to gently press the lofty down baffle on her left forearm and upper chest twice, demonstrating the instant, resilient rebound of the down filling on her worn jacket, while her left hand gently supports the jacket's lower front hem on her waist (hands relaxed flat against the fabric surface on her body, strictly zero pulling, gripping, or pocket insertion). From 00:05.800 to 00:07.400, her confident voiceover narration (S2) delivers: <d>[Chinese] 九零白鸭绒，冬天一千多呢！</d>. At 00:07.400, the voiceover finishes cleanly, holding a 0.6-second visual demonstration buffer.\r\n[Shot 3] At 00:08.000, a clean hard cut returns to a steady medium shot framed from above the knees with the warehouse racks softly blurred behind her. <Subject 1> raises her left hand naturally to chest level, delivering an urgent, enthusiastic closing call with crisp lip-sync from 00:08.300 to 00:09.500: <d>[Chinese] 赶紧抢，反季马上结束！</d>. At 00:09.500, she finishes speaking and cleanly closes her lips into a radiant, assertive smile. From 00:09.500 to 00:10.000, she holds steady eye contact with the camera, breathing naturally with slight chest motion, concluding the video gracefully in a poised living moment.\r\n\r\noverall_soundscape:\r\nBustling warehouse outlet ambient acoustics, distant murmur of excited discount shoppers, gentle footsteps on polished concrete, crisp rustle of down garment fabric during hand smoothing, and natural breathing pauses between spoken phrases.\r\n\r\nnon_diegetic_music:\r\nAn upbeat, modern commercial electronic retail background beat playing softly beneath the vocals.\n",
+      "resolution": "768P",
+      "aspect_ratio": "9:16",
+      "width": 1344,
+      "height": 768,
+      "seconds": 10,
+      "advanced": true,
+      "fps": 24,
+      "keyframe_role": "first",
+      "ref_image_size": "2k",
+      "reference_mention_mode": "index",
+      "prompt_optimizer_settings": false,
+      "prompt_optimizer_scene_guide": "none",
+      "h3_bundle": [
+        "6",
+        0
+      ],
+      "media_1": [
+        "18",
+        0
+      ],
+      "media_type_1": "image",
+      "media_2": [
+        "35",
+        0
+      ],
+      "media_type_2": "image",
+      "media_3": [
+        "36",
+        0
+      ],
+      "media_type_3": "image",
+      "prompt_optimizer_resources": "[{\"type\":\"image\",\"tag\":\"<Picture 1>\",\"name\":\"南汐女装_02.jpg\",\"asset\":{\"filename\":\"南汐女装_02.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 2>\",\"name\":\"SJYH3762.jpg\",\"asset\":{\"filename\":\"SJYH3762.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 3>\",\"name\":\"反季活动 (1).jpg\",\"asset\":{\"filename\":\"反季活动 (1).jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 4>\",\"name\":\"图片节点 6 (1) (1).png\",\"asset\":{\"filename\":\"图片节点 6 (1) (1).png\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 5>\",\"name\":\"fede9c17c610f7ef1d0ccc23cbde047e449cbf5eb3d753cac50259a1e8fddcd7.jpg\",\"asset\":{\"filename\":\"fede9c17c610f7ef1d0ccc23cbde047e449cbf5eb3d753cac50259a1e8fddcd7.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 6>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}}]",
+      "prompt_optimizer_marker": "{}",
+      "prompt_optimizer_prompt_connected": false
+    },
+    "class_type": "MiniMaxH3Easy",
+    "_meta": {
+      "title": "MiniMax H3 Easy"
+    }
+  },
+  "8": {
+    "inputs": {
+      "h3_context": [
+        "7",
+        1
+      ]
+    },
+    "class_type": "MiniMaxH3EasyOutput",
+    "_meta": {
+      "title": "MiniMax H3 Easy 输出"
+    }
+  },
+  "9": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 0.74,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "10": {
+    "inputs": {
+      "noise": [
+        "14",
+        0
+      ],
+      "guider": [
+        "11",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "8",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model": [
+        "9",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "14": {
+    "inputs": {
+      "noise_seed": 928345457407218
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "15": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "16": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "一采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "5",
+        0
+      ],
+      "audio": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "18": {
+    "inputs": {
+      "image": "南汐女装_02.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "35": {
+    "inputs": {
+      "image": "SJYH3762.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "36": {
+    "inputs": {
+      "image": "反季活动 (1).jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "94": {
+    "inputs": {
+      "anything": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "291": {
+    "inputs": {
+      "images": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  }
+}

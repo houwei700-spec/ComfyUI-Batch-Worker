@@ -1,0 +1,288 @@
+{
+  "5": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "6": {
+    "inputs": {
+      "fl2va_model": "无",
+      "ref2va_model": "minimax_h3_ref2va_int8_convrot.safetensors",
+      "text_encoder": "qwen3vl_32b_minimax_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
+      "video_vae": "minimax_h3_video_vae_int8_convrot.safetensors",
+      "audio_vae": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "MiniMaxH3EasyLoader",
+    "_meta": {
+      "title": "MiniMax H3 Easy 加载器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "mode": "reference",
+      "prompt": "subject_definitions:\r\n<Subject 1> is the young Asian female presenter whose biological identity, facial bone structure, features, and exact hairstyle strictly come 100% from __MINIMAX_H3_REF_1__, whose apparel silhouette, cut, and details strictly come from __MINIMAX_H3_REF_2__, and whose body motion and posture transitions are executed naturally (completely isolated from any unwanted apparel or facial artifacts).\r\n__MINIMAX_H3_REF_1__ is the person identity reference, defining all appearance details including facial features, bone structure, makeup, hair color, and exact hairstyle (every visual detail of the woman's face, makeup, and hairstyle/haircut is defined entirely by __MINIMAX_H3_REF_1__ and must be preserved faithfully with zero style drift or loose hair hallucination).\r\n__MINIMAX_H3_REF_2__ is the apparel reference, defining the outerwear silhouette, cut, collar, placket, pockets, quilting pattern, fabric texture, original color, and crucially the exact frontal wearing, collar structure, and placket closure state as displayed in the frontal photo of __MINIMAX_H3_REF_2__.\r\n__MINIMAX_H3_REF_3__ is the strict first-frame keyframe anchor and scene reference. Its exact camera viewpoint, angle, lighting, and spatial composition define the opening frame of [Shot 1] at 00:00.000 with 100% geometric fidelity: an upscale Parisian-style street bistro restaurant exterior with neatly trimmed low green shrubs, grey brick sidewalk, wide panoramic glass display windows, warm interior dining tables with white tablecloths and glowing golden chandelier, dark canvas awning dotted with golden dots, and polished golden storefront signage.\r\n\r\nsummary:\r\n[keyframe completion + reference generation] The target video is a 9-second high-end luxury cinematic fashion showcase set outside an elegant street restaurant (__MINIMAX_H3_REF_3__), structured into a coherent 5-shot sequence. In the opening frame of [Shot 1] at 00:00.000, presenter <Subject 1> (appearance from __MINIMAX_H3_REF_1__) stands in the midground outside the bistro holding a wooden hanger with the outerwear from __MINIMAX_H3_REF_2__ matching 100% of its collar structure and closed placket state from __MINIMAX_H3_REF_2__, perfectly replicating __MINIMAX_H3_REF_3__ with 100% geometric fidelity. She demonstrates the draped garment with a graceful smile. At 00:02.000, [Shot 2] cuts to an upper-body close-up as she executes a fluid, effortless swing-on gesture, sliding both arms smoothly into the sleeves. At 00:03.800, [Shot 3] cuts back to a fixed medium shot of <Subject 1> properly wearing the jacket with front placket naturally closed, smoothing the collar and closure seam down to her waist with a confident smile. At 00:05.500, [Shot 4] cuts to a tight torso close-up of the closed jacket actively worn on her living body, pressing the fluffy down baffle to showcase instant rebound. At 00:07.200, [Shot 5] executes a lateral tracking shot as she strolls gracefully along the brick pavement, slowing down to turn front-facing the camera with locked eye contact, resting her fingertips lightly at her collar lapel in a poised 0.5-second breathing finale. Rigid hand safety enforced: inserting hands into pockets is strictly prohibited; grabbing or tugging pockets is strictly prohibited; rolling up sleeves is strictly prohibited; altering collar structure is strictly prohibited; no spoken dialogue, no subtitles, no watermarks.\r\n\r\nretention_analysis:\r\n<Subject 1> (appears across all shots): fully_preserved - facial bone structure, biological features, makeup, native hairstyle, and body proportions from __MINIMAX_H3_REF_1__ are faithfully preserved across all shots without altering hair style or length.\r\n__MINIMAX_H3_REF_1__: fully_preserved - facial bone structure, features, makeup, and original hairstyle are preserved faithfully.\r\n__MINIMAX_H3_REF_2__: fully_preserved - apparel silhouette, cut, quilting pattern, pockets, hardware, original fabric color/texture, and especially the exact collar shape and placket closure state are preserved 100% identical to the frontal reference of __MINIMAX_H3_REF_2__ without altering the garment's original design or wearing style; from [Shot 3] onwards, the garment strictly remains continuously worn on <Subject 1>'s living body across all shots including close-ups, with body volume, shoulder line, and sleeve fitting preserved, strictly never shown as detached or flat-lay clothing.\r\n__MINIMAX_H3_REF_3__ ([Shot 1] first frame & scene environment): fully_preserved - street restaurant exterior, green shrubs, grey brick pavement, glass display windows, glowing chandelier, and dark awning are preserved 100% as the scene environment and opening frame.\r\nNegative constraints enforced: inserting hands into pockets is strictly prohibited; grabbing or tugging pockets is strictly prohibited; rolling up or bunching sleeves is strictly prohibited; arm clipping through fabric is strictly prohibited; displaying the garment as detached, hung on a hanger, flat-lay, or un-worn clothing after [Shot 2] is strictly prohibited; character pop-in or sudden morphing is strictly prohibited; altering collar structure is strictly prohibited; zero hand occlusion or pocket clipping; altering camera composition of __MINIMAX_H3_REF_3__ in opening frame is strictly prohibited; no spoken dialogue, no subtitles, no watermarks.\r\n\r\ndetailed_description:\r\nThe target video adopts a realistic high-fashion luxury film cinematography style: Kodak Portra 400 film grain, late autumn golden hour 5200K rim lighting, warm golden and cool neutral cinema grading, 50mm f/1.4 shallow depth of field, real skin pores, and fluid camera transitions. The 9-second narrative unfolds seamlessly across 5 precisely timed shots without spoken dialogue, subtitles, UI overlays, watermarks, or facial distortion. (Global negative constraints: inserting hands into pockets is strictly prohibited; grabbing or pulling pockets is strictly prohibited; rolling up or bunching sleeves is strictly prohibited; zero hand occlusion or pocket clipping; fabric tearing or sleeve clipping is strictly prohibited).\r\n[Shot 1] 00:00.000 - 00:02.000: The opening frame at 00:00.000 strictly and flawlessly replicates the exact 1:1 camera viewpoint, lighting, and composition of __MINIMAX_H3_REF_3__. Fixed medium shot (framed from above the knees) positioned at the left-third of the frame outside the street restaurant (__MINIMAX_H3_REF_3__). <Subject 1> (wearing a fitted regular hip-length black turtleneck base sweater, black skinny pants, and black knee-high leather boots; facial features, makeup, and exact hairstyle 100% faithful to __MINIMAX_H3_REF_1__) stands with her weight comfortably on her right leg. Her right hand naturally holds the neck of a polished wooden hanger, with the outerwear from __MINIMAX_H3_REF_2__ naturally hanging down in its closed frontal state (faithfully exhibiting 100% of its cut, silhouette, fabric texture, quilting pattern, and original color). She presents a serene, elegant smile toward the lens; her left hand lifts gently from her side, fingertips lightly brushing the front chest fabric and sliding downwards 3 cm to demonstrate the fabric's soft hand-feel.\r\n[Shot 2] At 00:02.000 - 00:03.800: A clean hard cut frames an upper-body close-up focusing on the dynamic dressing action (without full face framing). Both hands smoothly spread the outerwear from __MINIMAX_H3_REF_2__ open by the shoulder seams, swinging it in a fluid, continuous arc behind her right shoulder and across her back. As the outerwear settles naturally onto her shoulders, both arms slide effortlessly and completely into the full-length sleeves in one seamless, graceful motion without fabric clipping or limb distortion. The jacket settles naturally against her figure.\r\n[Shot 3] At 00:03.800 - 00:05.500: A clean hard cut returns to a fixed medium shot (framed from above the knees). <Subject 1> is now fully and properly wearing the exact outerwear from __MINIMAX_H3_REF_2__ with both arms inserted completely inside the sleeves (faithfully maintaining 100% of its cut, silhouette, original color, fabric texture, quilting pattern, pockets, and hardware details exactly as shown in __MINIMAX_H3_REF_2__; with both sleeves remaining fully extended down to the wrists, strictly never rolled up or pushed up), with its collar structure and placket closure state strictly matching 100% of the real-wear frontal reference in __MINIMAX_H3_REF_2__ without modifying its original collar style or closure degree. She stands facing the camera with poise. Both hands gently raise to the collar, lightly smoothing along the collar and front closure seam down to the waist, then her left hand rests naturally at her side. She tilts her head downward 10 degrees to inspect the neat collar, then smoothly raises her head, meeting the camera lens with a satisfied, radiant, confident smile.\r\n[Shot 4] At 00:05.500 - 00:07.200: A clean hard cut frames a tight upper-body torso close-up of <Subject 1> (framed from below the neck to the waist). Crucially, <Subject 1> remains visibly, properly, and continuously wearing the exact outerwear from __MINIMAX_H3_REF_2__ on her living body (shoulders, chest volume, and torso are unmistakably inside the garment, confirming with 100% clarity that the jacket is actively worn on her figure matching 100% of its closed collar and placket state from __MINIMAX_H3_REF_2__, strictly never displayed as flat, hung, or detached clothing). Soft ambient street lighting highlights the lustrous fabric texture and quilting. Her right hand raises gracefully across her chest, fingertips sliding smoothly along the left sleeve from shoulder seam to mid-forearm, then pressing the lofty down baffle twice to demonstrate instant, resilient rebound, while her left hand rests flat and relaxed against the jacket lower hem (hands relaxed flat against the fabric surface, strictly zero pulling, gripping, or pocket insertion).\r\n[Shot 5] At 00:07.200 - 00:09.000: A clean hard cut transitions to a medium tracking shot (framed from the mid-thighs up). Wearing the outerwear from __MINIMAX_H3_REF_2__, <Subject 1> strolls gracefully from screen-left to screen-right along the grey brick sidewalk in front of __MINIMAX_H3_REF_3__, coat hem swaying gently with her balanced, rhythmic steps and arms swinging naturally at her sides (hands completely outside of pockets). Reaching the right-center of the frame, she gracefully decelerates to a stop. Her gaze turns first toward the camera, followed by a smooth 30-degree turn of her head and shoulders, fully facing the camera with her left shoulder slightly forward. Her right hand lifts naturally to rest its fingertips lightly against the collar edge near her clavicle with relaxed fingers; her left arm hangs naturally at her side. She holds a subtle, confident, aristocratic smile directly into the lens, breathing evenly in a poised living moment until 00:09.000.\r\n\r\noverall_soundscape:\r\nGentle, cinematic outdoor ambient street acoustics: crisp rustle of jacket fabric during motion, distant muffled hum of Parisian city traffic, soft rhythmic clicking of leather boots on grey brick sidewalk, and subtle autumn breeze. No spoken dialogue.\r\n\r\nnon_diegetic_music:\r\nA warm, luxurious cinematic background score blending minimalist acoustic grand piano with lush, gentle cello strings at a moderate, relaxed tempo.\n",
+      "resolution": "768P",
+      "aspect_ratio": "9:16",
+      "width": 1344,
+      "height": 768,
+      "seconds": 9,
+      "advanced": true,
+      "fps": 24,
+      "keyframe_role": "first",
+      "ref_image_size": "2k",
+      "reference_mention_mode": "index",
+      "prompt_optimizer_settings": false,
+      "prompt_optimizer_scene_guide": "none",
+      "h3_bundle": [
+        "6",
+        0
+      ],
+      "media_1": [
+        "18",
+        0
+      ],
+      "media_type_1": "image",
+      "media_2": [
+        "35",
+        0
+      ],
+      "media_type_2": "image",
+      "media_3": [
+        "36",
+        0
+      ],
+      "media_type_3": "image",
+      "media_4": [
+        "43",
+        0
+      ],
+      "media_type_4": "video",
+      "prompt_optimizer_resources": "[{\"type\":\"image\",\"tag\":\"<Picture 1>\",\"name\":\"迷苏女装_04.jpg\",\"asset\":{\"filename\":\"迷苏女装_04.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 2>\",\"name\":\"8.30.jpg\",\"asset\":{\"filename\":\"8.30.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 3>\",\"name\":\"街边餐厅外景.jpg\",\"asset\":{\"filename\":\"街边餐厅外景.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 4>\",\"name\":\"场景图3.png\",\"asset\":{\"filename\":\"场景图3.png\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 5>\",\"name\":\"场景图3.png\",\"asset\":{\"filename\":\"场景图3.png\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 6>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 1>\",\"name\":\"夜景最新骨骼参考.mp4\",\"asset\":{\"filename\":\"夜景最新骨骼参考.mp4\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}}]",
+      "prompt_optimizer_marker": "{}",
+      "prompt_optimizer_prompt_connected": false
+    },
+    "class_type": "MiniMaxH3Easy",
+    "_meta": {
+      "title": "MiniMax H3 Easy"
+    }
+  },
+  "8": {
+    "inputs": {
+      "h3_context": [
+        "7",
+        1
+      ]
+    },
+    "class_type": "MiniMaxH3EasyOutput",
+    "_meta": {
+      "title": "MiniMax H3 Easy 输出"
+    }
+  },
+  "9": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 0.74,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "10": {
+    "inputs": {
+      "noise": [
+        "14",
+        0
+      ],
+      "guider": [
+        "11",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "8",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model": [
+        "9",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "14": {
+    "inputs": {
+      "noise_seed": 806287683096272
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "15": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "16": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "一采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "5",
+        0
+      ],
+      "audio": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "18": {
+    "inputs": {
+      "image": "迷苏女装_04.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "35": {
+    "inputs": {
+      "image": "8.30.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "36": {
+    "inputs": {
+      "image": "街边餐厅外景.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "43": {
+    "inputs": {
+      "file": "夜景最新骨骼参考.mp4"
+    },
+    "class_type": "LoadVideo",
+    "_meta": {
+      "title": "加载视频"
+    }
+  },
+  "94": {
+    "inputs": {
+      "anything": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "291": {
+    "inputs": {
+      "images": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  }
+}

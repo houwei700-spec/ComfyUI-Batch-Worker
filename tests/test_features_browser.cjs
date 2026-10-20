@@ -1,0 +1,96 @@
+const {chromium}=require('C:/Users/sun/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert=require('node:assert/strict');
+const path=require('node:path');
+const fs=require('node:fs');
+const parser=require('../web/js/document-parser-20261004.js');
+const core=require('../web/js/dialogue-core-20261005.js');
+const sample='E:/ComfyUI-Batch-Worker/任务批量导入  汇总文件存放/12个场景提示词汇总_可直接复制.md';
+(async()=>{
+const browser=await chromium.launch({headless:true,channel:'chrome'});
+try{
+ const page=await browser.newPage({viewport:{width:1920,height:1200}});const errors=[],posts=[];
+ page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.method()==='POST')posts.push(r.url());});
+ page.on('dialog',d=>d.accept());
+ await page.goto('http://127.0.0.1:19106/prompt-lab.html');
+ await page.locator('#document_file').setInputFiles(sample);
+ await page.locator('#document_dialog').waitFor({state:'visible'});
+ await page.locator('#document_apply').click();
+ assert.equal(await page.locator('.lab-draft').count(),12);
+ const before=await page.locator('.lab-draft textarea').evaluateAll(es=>es.map(e=>e.value));
+ await page.locator('#dialogue_open').click();
+ assert.equal(await page.locator('.dialogue-template').count(),12);
+ assert.equal(await page.locator('.dialogue-entry').count(),4);
+ await page.locator('.dialogue-text').first().fill('今天和朋友去看展，穿这身正合适。');
+ await page.locator('[data-template="1"]').click();
+ assert.equal(await page.locator('.dialogue-entry').count(),5);
+ await page.locator('.dialogue-text').first().fill('下车以后还有安排吗？');
+ await page.locator('#dialogue_close').click();
+ await page.reload();await page.locator('#dialogue_open').click();
+ assert.equal(await page.locator('.dialogue-text').first().inputValue(),'今天和朋友去看展，穿这身正合适。');
+ await page.screenshot({path:path.resolve('features-editor.png'),fullPage:true});
+ await page.locator('#dialogue_preview').click();
+ await page.screenshot({path:path.resolve('features-review.png'),fullPage:true});
+ // Simulate quota failure at the single atomic draft write, not at edit storage.
+ await page.evaluate(()=>{window.realSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(window.failDraft&&k.endsWith('promptLabDraft'))throw new DOMException('quota','QuotaExceededError');return window.realSet.call(this,k,v);};window.failDraft=true;});
+ await page.locator('#dialogue_apply').click();
+ assert.equal(await page.locator('#dialogue_dialog').isVisible(),true);
+ assert.deepEqual(await page.locator('.lab-draft textarea').evaluateAll(es=>es.map(e=>e.value)),before);
+ await page.evaluate(()=>window.failDraft=false);
+ await page.locator('#dialogue_apply').click();
+ await page.locator('#dialogue_dialog').waitFor({state:'hidden'});
+ const after=await page.locator('.lab-draft textarea').evaluateAll(es=>es.map(e=>e.value));
+ for(let i=0;i<12;i++){
+  const entries=core.extract(before[i]);if(i===0)entries[0].text='今天和朋友去看展，穿这身正合适。';if(i===1)entries[0].text='下车以后还有安排吗？';
+  assert.equal(after[i],core.apply(before[i],entries));
+ }
+ await page.reload();await page.locator('#dialogue_undo').click();
+ assert.deepEqual(await page.locator('.lab-draft textarea').evaluateAll(es=>es.map(e=>e.value)),before);
+ // Persisted draft changes elsewhere are detected before applying.
+ await page.locator('#dialogue_open').click();await page.locator('.dialogue-text').first().fill('冲突测试');await page.locator('#dialogue_preview').click();
+ await page.evaluate(()=>{const k=Object.keys(localStorage).find(k=>k.endsWith(':promptLabDraft'));const v=JSON.parse(localStorage.getItem(k));v.rows[0].prompt+='\n其他页面的修改';localStorage.setItem(k,JSON.stringify(v));});
+ await page.locator('#dialogue_apply').click();assert.match(await page.locator('#dialogue_error').innerText(),/其他操作或页面/);
+ await page.locator('#dialogue_close').click();
+ const stateBefore=await (await page.request.get('http://127.0.0.1:19106/api/prompt_lab/state')).json();
+ await page.locator('[data-id="LAB-000001"] [data-action="promote"]').click();
+ await page.locator('[data-id="LAB-000001"] .promotion-note').waitFor();
+ const stateAfter=await (await page.request.get('http://127.0.0.1:19106/api/prompt_lab/state')).json();
+ const target=stateAfter.tasks.find(t=>t.source_task_id==='LAB-000001');assert.ok(target);
+ assert.equal(stateAfter.tasks.length,stateBefore.tasks.length+1);assert.equal(target.status,'PENDING');assert.equal(target.assets.scene,null);assert.equal(target.held_for_start,true);
+ await page.locator('[data-id="LAB-000002"] [data-action="view"]').click();
+ await page.locator('#promote_video').click();
+ const state2=await (await page.request.get('http://127.0.0.1:19106/api/prompt_lab/state')).json();
+ assert.equal(state2.tasks.filter(t=>t.source_task_id).length,2);
+ assert.ok(state2.tasks.find(t=>t.source_task_id==='LAB-000002').assets.scene);
+ await page.goto('http://127.0.0.1:19106/prompt-lab.html?mode=768p');
+ assert.equal(await page.locator('.lab-draft textarea').inputValue(),'');
+ await page.locator('[data-id="'+target.task_id+'"] [data-action="view"]').click();
+ assert.match(await page.locator('#promote_link').innerText(),/LAB-000001/);
+ assert.equal(await page.locator('#promote_video').isVisible(),false);
+ const context2=await browser.newContext({viewport:{width:1366,height:768}});const edit=await context2.newPage();
+ edit.on('dialog',d=>d.accept());edit.on('pageerror',e=>errors.push(e.message));
+ await edit.goto('http://127.0.0.1:19106/prompt-lab.html');
+ await edit.locator('#import_open').click();
+ await edit.locator('#import_text').fill(JSON.stringify([{prompt:'对白｜主角：第一句。',seconds:15},{prompt:'对白｜主角：第二句。',seconds:15}]));
+ await edit.locator('#import_apply').click();
+ await edit.locator('#dialogue_open').click();await edit.locator('.dialogue-text').fill('第一句修改。');
+ await edit.locator('[data-template="1"]').click();await edit.locator('.dialogue-text').fill('第二句修改。');
+ await edit.locator('#dialogue_preview').click();await edit.locator('#dialogue_selected').uncheck();await edit.locator('#dialogue_apply').click();
+ assert.deepEqual(await edit.locator('.lab-draft textarea').evaluateAll(es=>es.map(e=>e.value)),['对白｜主角：第一句修改。','对白｜主角：第二句。']);
+ await edit.reload();await edit.locator('#dialogue_open').click();await edit.locator('[data-template="1"]').click();
+ assert.equal(await edit.locator('.dialogue-text').inputValue(),'第二句修改。');
+ await edit.locator('#dialogue_preview').click();await edit.locator('#dialogue_selected').check();await edit.locator('#dialogue_apply').click();
+ assert.equal(await edit.locator('.lab-draft textarea').nth(1).inputValue(),'对白｜主角：第二句修改。');
+ // Manual extraction is available even for unrecognized formats and requires a speaker check.
+ await edit.locator('.lab-draft textarea').first().fill('动作保持。\n想说的话是 今天天气很好。\n场景保持。');
+ await edit.locator('#dialogue_open').click();assert.equal(await edit.locator('.dialogue-entry').count(),0);
+ await edit.locator('#dialogue_source').evaluate(el=>{const start=el.value.indexOf('今天天气很好。');el.focus();el.setSelectionRange(start,start+8);});
+ await edit.locator('#dialogue_manual').click();await edit.locator('.dialogue-text').fill('今天一起去走走。');
+ await edit.locator('#dialogue_preview').click();assert.match(await edit.locator('#dialogue_error').innerText(),/核对说话人/);
+ await edit.locator('.dialogue-speaker').fill('主角');await edit.locator('.dialogue-confirm').check();
+ await edit.locator('#dialogue_preview').click();await edit.screenshot({path:path.resolve('features-1366.png'),fullPage:false});await edit.locator('#dialogue_apply').click();
+ assert.equal(await edit.locator('.lab-draft textarea').first().inputValue(),'动作保持。\n想说的话是 今天一起去走走。\n场景保持。');
+ await context2.close();
+ assert.ok(posts.every(url=>!url.endsWith('/start')));assert.deepEqual(errors,[]);
+ console.log('PASS browser: import12, edit49 structure, resume, exact multi-template replacement, quota atomicity, reload undo, cross-tab conflict, both promotion buttons, saved scenes, independent modes, no generation POST');
+}finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exit(1);});

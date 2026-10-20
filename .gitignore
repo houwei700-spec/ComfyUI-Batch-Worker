@@ -1,0 +1,24 @@
+.venv/
+__pycache__/
+*.py[cod]
+config.json
+config.json.tmp
+tasks.csv
+tasks.csv.sequence
+batch_hub.log
+*.log
+*.stderr.log
+*.stdout.log
+output/
+/assets/
+/prompt_lab/assets/
+/prompt_lab/submissions/
+/prompt_lab/tasks.json
+/restart-backup*/
+/dialogue-tags-backup*/
+/测试服装/
+/调色服装/
+/任务批量导入  汇总文件存放/
+*.mp4
+*.mov
+*.webm

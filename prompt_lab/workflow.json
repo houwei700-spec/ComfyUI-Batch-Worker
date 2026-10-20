@@ -1,0 +1,260 @@
+{
+  "5": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "6": {
+    "inputs": {
+      "fl2va_model": "无",
+      "ref2va_model": "minimax_h3_ref2va_int8_convrot.safetensors",
+      "text_encoder": "qwen3vl_32b_minimax_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
+      "video_vae": "minimax_h3_video_vae_int8_convrot.safetensors",
+      "audio_vae": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "MiniMaxH3EasyLoader",
+    "_meta": {
+      "title": "MiniMax H3 Easy 加载器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "mode": "reference",
+      "prompt": "\n",
+      "resolution": "480P",
+      "aspect_ratio": "9:16",
+      "width": 1344,
+      "height": 768,
+      "seconds": 13,
+      "advanced": true,
+      "fps": 24,
+      "keyframe_role": "first",
+      "ref_image_size": "2k",
+      "reference_mention_mode": "index",
+      "prompt_optimizer_settings": false,
+      "prompt_optimizer_scene_guide": "none",
+      "h3_bundle": [
+        "6",
+        0
+      ],
+      "media_1": [
+        "39",
+        0
+      ],
+      "media_type_1": "image",
+      "media_2": [
+        "291",
+        0
+      ],
+      "media_type_2": "image",
+      "prompt_optimizer_resources": "[{\"type\":\"audio\",\"tag\":\"<Audio 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 4>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 5>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 6>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}}]",
+      "prompt_optimizer_marker": "{}",
+      "prompt_optimizer_prompt_connected": false
+    },
+    "class_type": "MiniMaxH3Easy",
+    "_meta": {
+      "title": "MiniMax H3 Easy"
+    }
+  },
+  "8": {
+    "inputs": {
+      "h3_context": [
+        "7",
+        1
+      ]
+    },
+    "class_type": "MiniMaxH3EasyOutput",
+    "_meta": {
+      "title": "MiniMax H3 Easy 输出"
+    }
+  },
+  "9": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 0.74,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "10": {
+    "inputs": {
+      "noise": [
+        "14",
+        0
+      ],
+      "guider": [
+        "11",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "8",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model": [
+        "9",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "14": {
+    "inputs": {
+      "noise_seed": 351286650208497
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "15": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "16": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "一采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "5",
+        0
+      ],
+      "audio": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "39": {
+    "inputs": {
+      "image": "None"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "94": {
+    "inputs": {
+      "anything": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "290": {
+    "inputs": {
+      "anything": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "291": {
+    "inputs": {
+      "image": "None"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  }
+}

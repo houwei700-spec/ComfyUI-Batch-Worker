@@ -1,0 +1,20 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const core=require('../web/js/dialogue-core-20261005.js');
+const parser=require('../web/js/document-parser-20261004.js');
+const source='【0.0—2.6秒】\r\n动作：转头，不改动。\r\n对白｜主角：你好呀。\r\n对白｜画外女邻居：你好呀。\r\n【场景】\r\n房间里挂着“你好呀。”的画。';
+const entries=core.extract(source);
+assert.equal(entries.length,3);assert.equal(entries[0].speaker,'主角');assert.equal(entries[0].time,'0.0—2.6秒');
+assert.equal(entries[2].confirmed,false);assert.equal(entries[2].time,'未标注');
+entries[0].text='今天心情不错呀！';
+assert.equal(core.apply(source,entries),source.replace('对白｜主角：你好呀。','对白｜主角：今天心情不错呀！'));
+assert.throws(()=>core.apply(source+'change',[{...entries[0],start:0}]));
+assert.throws(()=>core.apply(source,[entries[0],entries[0]]));
+assert.throws(()=>core.apply(source,[{...entries[0],confirmed:false}]));
+assert.throws(()=>core.apply(source,[{...entries[0],text:''}]));
+const quoted=core.extract('3.0—6.0秒\n主角：“今天不换了。”\n画外女同事对白，6.0—9.1秒：“在哪儿买的？”');
+assert.equal(quoted.length,2);assert.equal(quoted[1].speaker,'画外女同事');assert.equal(quoted[1].time,'6.0—9.1秒');
+const sample=fs.readFileSync('E:/ComfyUI-Batch-Worker/任务批量导入  汇总文件存放/12个场景提示词汇总_可直接复制.md','utf8');
+const rows=parser.parse(sample).rows;assert.equal(rows.length,12);
+for(const row of rows){const found=core.extract(row.prompt);assert.ok(found.length>=4,row.title);assert.equal(core.apply(row.prompt,found),row.prompt);for(const e of found)assert.equal(row.prompt.slice(e.start,e.end),e.original);console.log(row.title,found.length,'台词 / 待核对',found.filter(e=>!e.confirmed).length);}
+console.log('PASS exact replacement, duplicate text isolation, role/time extraction, conflicts, 12 real templates');

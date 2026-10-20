@@ -1,0 +1,280 @@
+'use strict';
+const $ = id => document.getElementById(id);
+const requestedMode = new URLSearchParams(location.search).get('mode');
+const taskQuality = ['768p','single768p'].includes(requestedMode) ? requestedMode : '480p';
+const qualityLabels = {'480p':'480p测试','single768p':'一彩768p','768p':'二彩928p'};
+const qualityLabel = qualityLabels[taskQuality];
+const draftStorageKey = (location.port!=='8999'?'documentImportTrial20261004:':'') + ({'480p':'promptLabDraft','768p':'promptLabDraft768p','single768p':'promptLabDraftSingle768p'}[taskQuality]);
+if(taskQuality !== '480p') {
+    document.title=qualityLabel+' · ComfyUI Batch Hub';
+    $('lab_page_title').textContent=qualityLabel;
+    $('lab_mode_link').href='/prompt-lab.html';
+    $('lab_mode_link').textContent='返回 480p 测试';
+    $('editor_heading').textContent='编写成品任务';
+    $('editor_hint').textContent='重新填写每条成品视频的提示词和时长，独立选择参考素材。';
+    $('enqueue').textContent='加入成品队列';
+    $('queue_heading').firstChild.textContent=qualityLabel+'队列 ';
+    $('queue_hint').textContent='成品任务使用独立的 '+qualityLabel+' 工作流；测试记录和视频保持原样。';
+    $('empty_queue').textContent='还没有成品任务。上传素材，填写提示词后加入队列。';
+}
+const assets = {model: null, apparel: null, scene: null};
+const statuses = {PENDING:'待启动',UPLOADING:'上传素材',SUBMITTING:'提交中',RUNNING:'生成中',DOWNLOADING:'下载中',DONE:'已完成',FAILED:'失败',REVIEW:'待核对'};
+let tasks = [], selectedId = '', fingerprint = '', uploading = 0, requestId = '', toastTimer;
+let queueFilter='', queueQuery='', queuePage=1, queueAccepting=false, taskActionBusy=false, promotionAvailable=false,singleAvailable=false;
+document.querySelectorAll('[data-mode]').forEach(link=>link.classList.toggle('active',link.dataset.mode===taskQuality));
+const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const assetUrl = a => a.source==='library'
+    ? '/api/asset/thumb/'+encodeURIComponent(a.category)+'/'+encodeURIComponent(a.file)
+    : '/api/prompt_lab/asset/' + encodeURIComponent(a.file);
+const libraryCategory = {model:'models',apparel:'apparels',scene:'scenes'};
+const UPLOADED_ASSET = '__uploaded_asset__';
+const assetRevision = {model:0,apparel:0,scene:0};
+const MAX_UPLOAD_BYTES = 20 * 1024 * 1024;
+const OPTIMIZED_TARGET_BYTES = 19 * 1024 * 1024;
+const formatMB = bytes => (bytes / 1024 / 1024).toFixed(1) + ' MB';
+async function prepareUpload(file) {
+    if(file.size <= MAX_UPLOAD_BYTES) return {blob:file,optimized:false};
+    let image;
+    const canvas=document.createElement('canvas');
+    try {
+        image=await createImageBitmap(file);
+        if(!image.width||!image.height)throw new Error('无法读取图片尺寸');
+        const scale=Math.min(1,8192/Math.max(image.width,image.height),Math.sqrt(32000000/(image.width*image.height)));
+        let width=Math.max(1,Math.floor(image.width*scale));
+        let height=Math.max(1,Math.floor(image.height*scale));
+        let quality=.94;
+        for(let attempt=0;attempt<8;attempt++) {
+            canvas.width=width;canvas.height=height;
+            const context=canvas.getContext('2d');
+            if(!context)throw new Error('浏览器无法处理这张图片');
+            context.imageSmoothingQuality='high';
+            context.drawImage(image,0,0,width,height);
+            const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/webp',quality));
+            if(!blob||blob.type!=='image/webp')throw new Error('浏览器不支持 WEBP 图片优化');
+            if(blob.size<=OPTIMIZED_TARGET_BYTES)return {blob,optimized:true};
+            if(attempt%2===0)quality=.82;
+            else {width=Math.max(1,Math.floor(width*.85));height=Math.max(1,Math.floor(height*.85));quality=.9;}
+        }
+        throw new Error('优化后仍超过 20 MB，请换一张较小的图片');
+    } catch(e) {
+        throw new Error('大图自动优化失败：'+e.message);
+    } finally {
+        image?.close();
+        canvas.width=canvas.height=1;
+    }
+}
+function toast(text) { $('lab_toast').textContent=text; $('lab_toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('lab_toast').hidden=true,6500); }
+async function api(action, body) {
+    const response=await fetch('/api/prompt_lab/'+action,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const data=await response.json(); if(!response.ok||!data.success) throw new Error(data.message||'请求失败'); return data;
+}
+async function guarded(button, operation) { button.disabled=true; try { await operation(); } catch(e) { toast(e.message); } finally { button.disabled=false; if(button.id==='lab_start') { try { await refresh(); } catch(e) { /* Polling reports connection errors. */ } } } }
+function saveDraft() {
+    try { localStorage.setItem(draftStorageKey,JSON.stringify({...JSON.parse(localStorage.getItem(draftStorageKey)||'{}'),assets,rows:getRows(),requestId})); } catch(e) { toast('草稿无法保存到浏览器，请勿关闭页面：'+e.message); }
+}
+function getRows() { return [...document.querySelectorAll('.lab-draft')].map(row=>({title:row.dataset.title||'',prompt:row.querySelector('textarea').value,seconds:row.querySelector('input').value,expanded:!row.classList.contains('collapsed')})); }
+function refreshDraftCount() {
+    [...document.querySelectorAll('.lab-draft')].forEach((row,i)=>{
+        const title=row.dataset.title.replace(/^\d+[.．、)）]\s*/,'');
+        row.querySelector('strong').textContent=String(i+1).padStart(2,'0')+'  '+(title||'任务 '+(i+1));
+        row.querySelector('.draft-summary').textContent=row.querySelector('textarea').value.trim().replace(/\s+/g,' ').slice(0,90)||'尚未填写提示词';
+    });
+    const rows=getRows(),total=rows.reduce((sum,row)=>sum+(Number(row.seconds)||0),0);
+    $('draft_count').textContent=rows.length+' 条待加入';
+    $('draft_total').textContent=rows.length+' 条任务 · 共 '+Number(total.toFixed(1))+' 秒';
+}
+function addRow(value={prompt:'',seconds:15}) {
+    const row=document.createElement('article'); row.className='lab-draft';
+    row.dataset.title=value.title||'';
+    row.innerHTML='<div class="lab-draft-bar"><button class="draft-toggle" type="button"><span class="draft-chevron">⌄</span><strong></strong></button><span class="draft-summary"></span><label>时长 <input type="number" min="0.2" max="30" step="0.1" aria-label="视频时长（秒）"> 秒</label><button class="draft-remove" type="button" aria-label="移除这一条">移除</button></div><textarea aria-label="视频提示词" placeholder="输入本条视频的提示词，例如人物动作、场景、镜头运动和画面要求…"></textarea>';
+    row.querySelector('textarea').value=value.prompt; row.querySelector('input').value=value.seconds;
+    const expanded=value.expanded??(!$('draft_rows').children.length||!value.prompt.trim());
+    row.classList.toggle('collapsed',!expanded);
+    row.querySelector('.draft-toggle').setAttribute('aria-expanded',String(expanded));
+    row.querySelector('.draft-toggle').onclick=()=>{row.classList.toggle('collapsed');row.querySelector('.draft-toggle').setAttribute('aria-expanded',String(!row.classList.contains('collapsed')));saveDraft();};
+    row.addEventListener('input',()=>{requestId='';refreshDraftCount();saveDraft();});
+    row.querySelector('.draft-remove').onclick=()=>{row.remove();if(!getRows().length)addRow();refreshDraftCount();requestId='';saveDraft();};
+    $('draft_rows').append(row);refreshDraftCount();
+}
+function showAsset(role) {
+    const a=assets[role], image=$(role+'_image'), select=$(role+'_saved');
+    for(const option of [...select.options])if(option.dataset.currentAsset)option.remove();
+    let selected='';
+    if(a) {
+        selected=a.source==='library'?a.file:UPLOADED_ASSET;
+        if(![...select.options].some(option=>option.value===selected)) {
+            const option=new Option((a.source==='library'?'系统素材：':'已上传：')+a.name,selected);
+            option.dataset.currentAsset='true';select.add(option);
+        }
+    }
+    image.hidden=!a;
+    if(a)image.src=assetUrl(a);else image.removeAttribute('src');
+    $(role+'_name').textContent=a?a.name:(role==='scene'?'不使用场景图':'尚未选择');
+    select.value=selected;
+    if(role==='apparel')$('clear_apparel').hidden=!a;
+    if(role==='scene')$('clear_scene').hidden=!a;
+}
+function selectAsset(role, asset) {
+    assetRevision[role]++;
+    assets[role]=asset;
+    $(role+'_file').value='';
+    showAsset(role);requestId='';saveDraft();
+}
+async function loadLibrary() {
+    const data=await api('library');
+    for(const role of Object.keys(assets)) {
+        const select=$(role+'_saved'), category=libraryCategory[role];
+        const placeholder=role==='scene'?'不使用场景图':'从系统'+(role==='model'?'模特':'服装')+'中选择…';
+        select.replaceChildren(new Option(placeholder,''));
+        for(const name of data[category]||[])select.add(new Option(name,name));
+        showAsset(role);
+    }
+}
+$('refresh_library').onclick=()=>guarded($('refresh_library'),async()=>{await loadLibrary();toast('系统素材列表已更新。');});
+for (const role of Object.keys(assets)) {
+    $(role+'_saved').onchange=event=>{
+        const name=event.target.value;
+        if(name===UPLOADED_ASSET)return;
+        selectAsset(role,name?{source:'library',category:libraryCategory[role],file:name,name}:null);
+    };
+    $(role+'_file').onchange=async event=>{
+        const file=event.target.files[0];if(!file)return;
+        const revision=++assetRevision[role];
+        uploading++;event.target.disabled=true;
+        try {
+            $(role+'_name').textContent='正在处理 '+file.name+'…';
+            const prepared=await prepareUpload(file);
+            const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.onerror=()=>reject(new Error('读取图片失败'));r.readAsDataURL(prepared.blob);});
+            const name=prepared.optimized?file.name+'（自动优化）':file.name;
+            const result=await api('upload',{name,data});
+            if(revision!==assetRevision[role])return;
+            assets[role]=result.asset;showAsset(role);requestId='';saveDraft();
+            if(prepared.optimized)toast(`已自动优化 ${formatMB(file.size)} → ${formatMB(prepared.blob.size)}；电脑上的原图未修改。`);
+        } catch(e){if(revision===assetRevision[role]){showAsset(role);toast(e.message);}} finally{uploading--;event.target.disabled=false;event.target.value='';}
+    };
+}
+$('clear_scene').onclick=()=>selectAsset('scene',null);
+$('clear_apparel').onclick=()=>selectAsset('apparel',null);
+$('add_row').onclick=()=>{addRow();requestId='';saveDraft();$('draft_rows').scrollTop=$('draft_rows').scrollHeight;};
+$('enqueue').onclick=()=>guarded($('enqueue'),async()=>{
+    if(uploading)throw new Error('请等待图片上传完成');
+    // Honor an explicit empty selection even if browser form restoration changed it.
+    if($('scene_saved').value===''&&assets.scene)selectAsset('scene',null);
+    if(!assets.model||!assets.apparel)throw new Error('请先选择或上传人物头像和服装');
+    const rows=getRows();if(rows.length>500)throw new Error('每次最多加入 500 条，请分批追加');
+    for(const [i,row] of rows.entries()){
+        const n=Number(row.seconds);
+        if(!row.prompt.trim())throw new Error('请填写任务 '+(i+1)+' 的提示词');
+        if(!Number.isFinite(n)||n<.2||n>30||Math.abs(n*10-Math.round(n*10))>.00001)throw new Error('任务 '+(i+1)+' 的时长应为 0.2–30 秒，步长 0.1 秒');
+    }
+    requestId ||= crypto.randomUUID();saveDraft();
+    const snapshot=JSON.stringify({assets,tasks:rows.map(({prompt,seconds})=>({prompt,seconds}))});
+    const result=await api('enqueue',{request_id:requestId,quality:taskQuality,...JSON.parse(snapshot)});
+    const unchanged=snapshot===JSON.stringify({assets,tasks:getRows().map(({prompt,seconds})=>({prompt,seconds}))});
+    if(unchanged){requestId='';$('draft_rows').replaceChildren();addRow();saveDraft();}
+    await refresh();toast('已加入 '+result.created_ids.length+' 条 '+taskQuality+' '+(taskQuality!=='480p'?'成品':'测试')+'任务；'+(unchanged?'点击启动队列后执行。':'提交期间的新修改已保留，请核对后再加入。'));
+});
+$('lab_start').onclick=()=>guarded($('lab_start'),async()=>{await api('start',{server_id:$('lab_server').value,quality:taskQuality});await refresh();});
+$('lab_pause').onclick=()=>guarded($('lab_pause'),async()=>{await api('pause',{});await refresh();toast('已暂停领取；当前任务继续生成和回传。');});
+function renderTasks() {
+    const view=QueueView.select(tasks,queueFilter,queueQuery,queuePage);queuePage=view.page;
+    const html=JSON.stringify([tasks,queueFilter,queueQuery,queuePage,queueAccepting,taskActionBusy,promotionAvailable,singleAvailable]);if(html===fingerprint)return;fingerprint=html;
+    $('task_count').textContent=tasks.length;$('empty_queue').hidden=view.total>0;
+    $('empty_queue').textContent=tasks.length?'没有符合当前筛选条件的任务。':'还没有任务。填写提示词或导入文档后加入队列。';
+    for(const button of document.querySelectorAll('[data-filter]')){button.classList.toggle('active',button.dataset.filter===queueFilter);button.querySelector('span').textContent=view.counts[button.dataset.filter||'all'];}
+    $('queue_page').textContent=view.page+' / '+view.pages;
+    $('queue_total').textContent='共 '+view.total+' 条记录';
+    $('queue_prev').disabled=view.page<=1;$('queue_next').disabled=view.page>=view.pages;
+    $('lab_tasks').innerHTML=view.rows.map(t=>`<tr data-id="${esc(t.task_id)}" class="${selectedId===t.task_id?'selected':''}"><td>${esc(t.task_id)}<br><small>${esc(qualityLabels[t.quality||'480p']||t.quality)}</small></td><td><div class="prompt-summary">${esc(t.prompt)}</div></td><td>${esc(t.seconds)} 秒</td><td><span class="task-state state-${esc(t.status)}">${statuses[t.status]||esc(t.status)}</span></td><td><div class="row-actions"><button data-action="view">${t.output_file?'详情 / 播放':'详情'}</button>${promotionButton(t)}${(t.prompt_id||t.client_id)&&['FAILED','REVIEW'].includes(t.status)?'<button data-action="receive">检查回传</button>':''}${['DONE','FAILED','REVIEW'].includes(t.status)?'<button data-action="retry">重新排队</button>':''}${['PENDING','DONE','FAILED'].includes(t.status)?'<button data-action="delete" '+(queueAccepting?'disabled title="请先暂停队列领取"':'')+'>删除记录</button>':''}</div></td></tr>`).join('');
+    if(taskActionBusy)for(const button of $('lab_tasks').querySelectorAll('button'))button.disabled=true;
+    if(selectedId&&!tasks.some(t=>t.task_id===selectedId))clearDetail();
+    if(selectedId)showDetail(selectedId);
+}
+function clearDetail() {
+    selectedId='';$('promote_video').hidden=true;$('promote_single').hidden=true;$('promote_link').hidden=true;$('detail_title').textContent='尚未选择任务';$('detail_meta').textContent='';$('detail_prompt').textContent='选择一条任务，查看完整提示词。';$('detail_error').textContent='';$('detail_assets').replaceChildren();
+    const video=$('lab_video');video.pause();video.dataset.file='';video.removeAttribute('src');video.load();video.hidden=true;$('lab_video_empty').hidden=false;$('locate_video').disabled=true;
+}
+$('queue_search').oninput=event=>{queueQuery=event.target.value;queuePage=1;renderTasks();};
+$('queue_filters').onclick=event=>{const button=event.target.closest('[data-filter]');if(!button)return;queueFilter=button.dataset.filter;queuePage=1;renderTasks();};
+$('queue_prev').onclick=()=>{queuePage--;renderTasks();};
+$('queue_next').onclick=()=>{queuePage++;renderTasks();};
+function showDetail(id) {
+    selectedId=id;const task=tasks.find(t=>t.task_id===id);if(!task)return;
+    document.querySelectorAll('#lab_tasks tr').forEach(row=>row.classList.toggle('selected',row.dataset.id===id));
+    $('detail_title').textContent=task.task_id;
+    $('detail_meta').textContent=`${qualityLabels[task.quality||'480p']||task.quality} · ${task.seconds} 秒 · ${statuses[task.status]}${task.worker_node?' · '+task.worker_node:''}${task.prompt_id?' · 执行编号 '+task.prompt_id:''}`;
+    for(const [buttonId,q] of [['promote_video','768p'],['promote_single','single768p']]){
+        const button=$(buttonId),target=promotedId(task,q);
+        button.hidden=taskQuality!=='480p'||task.status!=='DONE';
+        button.disabled=!promotionAvailable||(q==='single768p'&&!singleAvailable)||!!target||taskActionBusy;
+        button.textContent=target?'已加入'+qualityLabels[q]:'加入'+qualityLabels[q]+'队列';
+        button.title=target||'';
+    }
+    const target=promotedId(task,'768p')||promotedId(task,'single768p');
+    const targetQuality=promotedId(task,'768p')?'768p':'single768p';
+    $('promote_link').hidden=!(target||task.source_task_id);
+    $('promote_link').textContent=target?'成品任务 '+target+' · 查看成品队列 ↗':'来自测试任务 '+task.source_task_id;
+    $('promote_link').href=target?'/prompt-lab.html?mode='+targetQuality:'/prompt-lab.html';
+    $('detail_prompt').textContent=task.prompt;$('detail_error').textContent=task.error||'';
+    $('detail_assets').replaceChildren();
+    for(const role of ['model','apparel','scene']) {const a=task.assets[role];if(a){const img=document.createElement('img');img.src=assetUrl(a);img.alt=a.name;img.title=a.name;$('detail_assets').append(img);}}
+    const video=$('lab_video');const path=task.output_file||'';
+    if(video.dataset.file!==path){video.pause();video.dataset.file=path;if(path)video.src='/api/video_stream?filename='+encodeURIComponent(path);else{video.removeAttribute('src');video.load();}}
+    video.hidden=!path;$('lab_video_empty').hidden=!!path;$('locate_video').disabled=!path;
+}
+$('lab_tasks').onclick=event=>{
+    const button=event.target.closest('button[data-action]');if(!button)return;
+    if(button.disabled||taskActionBusy)return;
+    const id=button.closest('tr').dataset.id;const action=button.dataset.action;
+    if(action==='view'){showDetail(id);return;}
+    if(action==='promote'){guarded(button,()=>promoteTask(id,button.dataset.quality||'768p'));return;}
+    guarded(button,async()=>{
+        const task=tasks.find(t=>t.task_id===id);
+        if(action==='delete'&&!confirm('删除这条'+(taskQuality!=='480p'?'成品':'测试')+'记录？已生成的视频仍保留。'))return;
+        let confirmed=false;
+        if(action==='retry'&&task.status==='REVIEW') {confirmed=confirm('这条任务的云端状态尚未确认。请先核对云端队列和成品；重新排队可能再次生成。确认已核对并仍要重新排队？');if(!confirmed)return;}
+        taskActionBusy=true;renderTasks();
+        try{await api('task',{task_id:id,action,confirmed});await refresh();}finally{taskActionBusy=false;renderTasks();}
+    });
+};
+$('locate_video').onclick=()=>guarded($('locate_video'),async()=>{const t=tasks.find(t=>t.task_id===selectedId);if(!t?.output_file)return;const r=await fetch('/api/locate_file?filename='+encodeURIComponent(t.output_file),{method:'POST'});const d=await r.json();if(!d.success)throw new Error(d.message||'定位失败');});
+async function refresh() {
+    const data=await api('state');promotionAvailable=!!data.features?.promote;singleAvailable=!!data.features?.single768p;queueAccepting=Boolean(data.enabled||data.starting);tasks=data.tasks.filter(t=>(t.quality||'480p')===taskQuality);renderTasks();
+    const workers=Object.values(data.workers||{});
+    const active=data.tasks.filter(t=>['UPLOADING','SUBMITTING','RUNNING','DOWNLOADING'].includes(t.status)).length;
+    $('lab_status').textContent=data.starting?'正在检查各端口，暂未领取任务':data.enabled?`多端口并行中 · ${active} 条正在执行或回传`:data.busy?'已暂停领取 · 当前任务仍在生成或回传':'已暂停 · 等待手动启动';
+    const upgradeNotice=promotionAvailable?'':'文案编辑已可用；加入成品队列功能将在重启工作台后启用。';$('lab_notice').hidden=!(data.notice||upgradeNotice);$('lab_notice').textContent=[data.notice,upgradeNotice].filter(Boolean).join(' ');
+    $('lab_pause').disabled=!data.enabled&&!data.starting;
+    $('lab_start').disabled=data.busy;
+    const workerLabels={CHECKING:'检查中',WAITING:'等待端口空闲',IDLE:'等待任务',STOPPED:'已停止领取',DISABLED:'已停用',ERROR:'异常，已停止领取',UNAVAILABLE:'本次不可用',...statuses};
+    $('lab_workers').innerHTML=workers.map(w=>`<div class="lab-worker"><strong>${esc(w.name)}</strong><span>${esc(workerLabels[w.state]||w.state)}${w.task_id?' · '+esc(w.task_id):''}</span>${w.error?`<small>${esc(w.error)}</small>`:''}</div>`).join('');
+    const select=$('lab_server'); const key=JSON.stringify(data.servers);
+    if(select.dataset.key!==key){const old=select.dataset.key?select.value:(data.preferred_server_id||'all');select.replaceChildren();const all=document.createElement('option');all.value='all';all.textContent=`全部启用端口 · ${data.servers.length} 个并行`;select.append(all);for(const s of data.servers){const o=document.createElement('option');o.value=s.id;o.textContent='仅 '+s.name;select.append(o);}if(data.servers.some(s=>s.id===old))select.value=old;select.dataset.key=key;}
+}
+$('import_open').onclick=()=>{$('import_error').textContent='';$('import_dialog').showModal();};
+$('import_apply').onclick=()=>{try{const rows=JSON.parse($('import_text').value);if(!Array.isArray(rows)||!rows.length||rows.length+getRows().filter(r=>r.prompt.trim()).length>500)throw new Error('请提供任务数组，总数不超过 500 条');for(const r of rows){if(typeof r.prompt!=='string'||!r.prompt.trim()||!Number.isFinite(Number(r.seconds))||Number(r.seconds)<.2||Number(r.seconds)>30)throw new Error('每项必须有 prompt 和 0.2–30 秒的 seconds');}if(getRows().length===1&&!getRows()[0].prompt.trim())$('draft_rows').replaceChildren();rows.forEach(addRow);requestId='';saveDraft();$('import_dialog').close();}catch(e){$('import_error').textContent=e.message;}};
+try{const saved=JSON.parse(localStorage.getItem(draftStorageKey)||'null');if(saved){Object.assign(assets,saved.assets);for(const role of Object.keys(assets))showAsset(role);(saved.rows||[]).forEach(addRow);requestId=saved.requestId||'';}}catch(e){toast('本地草稿无法读取，请重新填写。');}
+if(!getRows().length)addRow();
+loadLibrary().catch(e=>toast('读取系统素材失败：'+e.message));
+async function poll(){try{await refresh();}catch(e){$('lab_status').textContent='连接失败：'+e.message;}finally{setTimeout(poll,2500);}}
+poll();
+
+function promotedId(task,quality){return task.promoted_tasks?.[quality]||(quality==='768p'?task.promoted_task_id:'');}
+function promotionButton(task){
+    if((task.quality||'480p')!=='480p'||task.status!=='DONE')return '';
+    return ['single768p','768p'].map(q=>{
+        const id=promotedId(task,q),label=qualityLabels[q];
+        if(id)return '<a class="promotion-note" href="/prompt-lab.html?mode='+q+'">已加入'+label+' '+esc(id)+'</a>';
+        const available=promotionAvailable&&(q!=='single768p'||singleAvailable);
+        return '<button data-action="promote" data-quality="'+q+'" '+(available?'':'disabled title="重启工作台后启用"')+'>加入'+label+'队列</button>';
+    }).join('');
+}
+async function promoteTask(id,quality='768p'){
+    if(taskActionBusy)return;
+    if(!promotionAvailable||(quality==='single768p'&&!singleAvailable))throw new Error('请先重启工作台以启用所选成品队列。');
+    taskActionBusy=true;renderTasks();
+    try{const result=await api('promote',{task_id:id,quality});await refresh();toast((result.already_added?'已加入过：':'已加入'+qualityLabels[quality]+'队列：')+result.task_id+'。请到对应成品页手动启动。');}
+    finally{taskActionBusy=false;renderTasks();}
+}
+$('promote_video').onclick=()=>guarded($('promote_video'),async()=>{await promoteTask(selectedId,'768p');if(selectedId)showDetail(selectedId);});
+$('promote_single').onclick=()=>guarded($('promote_single'),async()=>{await promoteTask(selectedId,'single768p');if(selectedId)showDetail(selectedId);});

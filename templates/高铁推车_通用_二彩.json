@@ -1,0 +1,509 @@
+{
+  "5": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "6": {
+    "inputs": {
+      "fl2va_model": "无",
+      "ref2va_model": "minimax_h3_hybrid_fl2va_ref2va_b25-49-int8.safetensors",
+      "text_encoder": "qwen3vl_32b_minimax_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
+      "video_vae": "minimax_h3_video_vae_int8_convrot.safetensors",
+      "audio_vae": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "MiniMaxH3EasyLoader",
+    "_meta": {
+      "title": "MiniMax H3 Easy 加载器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "mode": "reference",
+      "prompt": "subject_definitions:\r\n<Subject 1> is the young Asian female presenter whose biological identity, facial features, bone structure, makeup, and exact hairstyle strictly come 100% from __MINIMAX_H3_REF_1__ (every visual detail of the woman's face, makeup, and exact hairstyle is defined entirely by __MINIMAX_H3_REF_1__ and must be preserved faithfully with zero style drift or loose hair hallucination); whose apparel outerwear silhouette, cut, collar construction, and placket closure state strictly come from __MINIMAX_H3_REF_2__; wearing a base layer of a regular hip-length black turtleneck base sweater, black skinny pants, and black knee-high leather boots. She is speaker (S1).\r\n__MINIMAX_H3_REF_1__ is the person identity reference, defining all biological facial features, bone structure, makeup, hair color, and exact hairstyle.\r\n__MINIMAX_H3_REF_2__ is the apparel reference, dynamically defining the outerwear silhouette, cut, collar structure, placket closure state, pockets, quilting pattern, fabric texture, and original color exactly as displayed in the frontal photo of __MINIMAX_H3_REF_2__.\r\n__MINIMAX_H3_REF_3__ is the background environment and spatial scene reference, defining the spacious modern international airport terminal departure hall, including its architectural structure, polished reflective light-grey floor tiles, cylindrical columns, ceiling matrix lighting, and panoramic floor-to-ceiling glass curtain wall.\r\n\r\nsummary:\r\n[reference generation] The target video is a 12-second commercial lifestyle fashion dialogue film executed as a single, seamless continuous one-shot take (zero cuts, zero scene edits) set strictly within the spatial environment of the airport terminal departure hall established by __MINIMAX_H3_REF_3__. The interior environment features bright, clean, and uniformly diffused ambient lighting throughout the entire space (整体均匀漫射通透大平光，无直射太阳光), providing balanced, shadowless overall illumination that clearly showcases <Subject 1>'s face, makeup, and apparel fabric while completely eliminating harsh direct sun rays, glare, backlighting, or silhouette darkening. The camera adopts a natural first-person walking point-of-view (speaker S2) approaching <Subject 1> from her side profile before smoothly stepping around into her direct front, strictly avoiding any starting perspective from behind her back. <Subject 1> (speaker S1) wears the outerwear from __MINIMAX_H3_REF_2__ with its collar structure and front placket remaining naturally closed and fastened completely matching __MINIMAX_H3_REF_2__ over a regular hip-length black turtleneck base sweater, black skinny pants, and black knee-high leather boots, pushing a silver metal luggage trolley with a handbag in the basket, conversing naturally with the approaching passerby (speaker S2). The continuous take transitions smoothly while strictly maintaining comfortable medium framing to showcase the full apparel silhouette and garment hemline without close-ups, while enforcing acoustic anti-crosstalk timing rules and 100% dialogue preservation. Global negative constraints: strictly zero direct sunlight, zero direct sun rays, zero harsh directional light beams, zero sun glare, zero harsh cast shadows; strictly zero backlighting, zero backlit silhouettes, zero underexposed shadows on face or clothing; strictly zero camera cuts, zero fast cuts, zero scene transitions, zero split screens; starting from behind the subject's back is strictly prohibited; close-up shots, bust-level close-ups, tight crops, and head-and-shoulders framing are strictly prohibited; camera framing must strictly remain within medium-full to comfortable medium shot throughout the entire video to keep the full outerwear silhouette, waistline, and garment hemline clearly visible; modifying or distorting the architectural space, tile reflections, or structure defined in __MINIMAX_H3_REF_3__ is strictly prohibited; location drift into a railway station, mall, or train interior is strictly prohibited; altering or distorting the collar structure and closure style from __MINIMAX_H3_REF_2__ is strictly prohibited; dialogue overlapping or phantom lip movement during off-screen lines is strictly prohibited; strictly zero subtitles, zero on-screen text, zero watermarks, zero logos, zero UI overlays; zero pocket insertion; zero hand clipping through fabric or trolley handles.\r\n\r\nretention_analysis:\r\n<Subject 1> (appears throughout [Shot 1]): fully_preserved - facial features, bone structure, exact hairstyle, makeup, black turtleneck base sweater, black skinny pants, and black knee-high leather boots from __MINIMAX_H3_REF_1__ are faithfully preserved across the entire continuous shot without alteration.\r\n__MINIMAX_H3_REF_1__: fully_preserved - biological face shape, eyes, nose, lips, native hair texture, and makeup baseline are preserved faithfully.\r\n__MINIMAX_H3_REF_2__: fully_preserved - outerwear silhouette, cut, quilting pattern, pockets, hardware, original fabric color/texture, and especially the exact collar shape and placket closure state are preserved 100% identical to the frontal reference of __MINIMAX_H3_REF_2__ without modifying the garment's original fastening structure or wearing style.\r\n__MINIMAX_H3_REF_3__: fully_preserved - architectural space, polished floor tile reflections, ceiling matrix spotlights, structural columns, and airfield glass facade geometry defined by __MINIMAX_H3_REF_3__ are faithfully maintained throughout the entire continuous one-shot take without distortion or spatial morphing.\r\nNegative constraints enforced: direct sunlight, direct sun rays, harsh directional beams, and sun glare are strictly prohibited; backlighting, backlit silhouettes, dark underexposed face or garment fabric are strictly prohibited; starting from behind the subject's back is strictly prohibited; close-up shots, bust-level close-ups, tight crops, and head-and-shoulders framing are strictly prohibited; camera cuts, scene transitions, and hard edits are strictly prohibited; morphing into a railway station, train platform, mall, or hotel lobby is strictly prohibited; altering original collar or placket closure from __MINIMAX_H3_REF_2__ is strictly prohibited; speaker crosstalk is strictly prohibited; mouth movement during off-screen lines is strictly prohibited; pre-empting speech before the 0.4s buffer is strictly prohibited; inserting hands into pockets is strictly prohibited; grabbing or tugging pockets is strictly prohibited; hand penetration through trolley bars is strictly prohibited; subtitles or text overlays are strictly prohibited.\r\n\r\ndetailed_description:\r\nThe entire 12-second video is executed as a single, seamless, continuous one-shot take without cuts, fast edits, camera transitions, subtitles, UI overlays, watermarks, or facial distortion, set strictly inside the airport departure hall spatial environment established by __MINIMAX_H3_REF_3__. The lighting throughout the entire terminal is evenly diffused, soft, and bright ambient interior illumination (室内整体通透明亮大平光，绝无太阳直射光): broad, uniform ceiling ambient lights and soft indirect daylight create balanced, clean, shadowless clarity across the entire architectural space, completely eliminating direct sunlight rays, harsh sun glare, lens flare, backlighting silhouettes, or dark shadows, ensuring the face and garment colors remain authentic, bright, and evenly illuminated. Throughout the shot, the camera strictly avoids tight close-ups or bust crops, maintaining medium-full to comfortable medium shot framing to prominently showcase the full apparel silhouette and garment hemline.\r\n[Shot 1] The single continuous shot opens at 00:00.000 in an eye-level medium-full shot from a natural first-person passerby point of view (S2's perspective) walking steadily toward <Subject 1> from her side profile (avoiding any rear view behind her back) within the space of __MINIMAX_H3_REF_3__. The bright, evenly diffused ambient lighting clearly reveals the garment's authentic color and smooth fabric texture without any direct sun exposure, against the polished light-grey floor tiles and architectural columns of __MINIMAX_H3_REF_3__. <Subject 1> (she properly wears the exact outerwear from __MINIMAX_H3_REF_2__ with both arms inserted completely inside the sleeves (faithfully maintaining 100% of its cut, silhouette, original color, fabric texture, quilting pattern, pockets, and hardware details exactly as shown in __MINIMAX_H3_REF_2__), with its collar structure and placket closure state strictly matching 100% of the real-wear frontal reference in __MINIMAX_H3_REF_2__ without modifying its original collar style or closure degree; worn over a regular hip-length black turtleneck base sweater, paired with black skinny pants and black knee-high leather boots; faithfully maintaining 100% of her facial features, makeup, and exact hairstyle directly as shown in __MINIMAX_H3_REF_1__) walks forward pushing the silver metal handlebar of an airport luggage trolley (a handbag rests neatly in the front basket; hands grip the bar cleanly on the exterior surface with zero clipping or bar penetration), her posture relaxed and evenly illuminated by the bright ambient environment. At 00:00.500, as the first-person camera walks up alongside her flank, the friendly young female voice (S2) speaks directly from the first-person camera position: <d>[Chinese] 美女，你可真有钱，这件羽绒服要一千多吧。</d> finishing at 00:02.500. (Rigid anti-crosstalk rule strictly enforced: throughout this phase, <Subject 1> is viewed from her side profile under the clean, even ambient light, with her eyes naturally gazing forward and her lips firmly sealed and completely motionless, strictly preventing any premature mouth movement or phantom lip-syncing). Without any cuts, the first-person camera smoothly continues its walking pace, curving fluidly from her side around into her direct front from 00:01.500 to 00:02.500, seamlessly establishing an eye-level comfortable medium shot framed from above the knees/mid-thighs as she slows her walking pace; here, the bright, evenly diffused ambient light illuminates her entire upper body, face, and outerwear front placket with clear, balanced visibility, keeping her complete outerwear silhouette, waistline, and hemline clearly visible. From 00:02.500 to 00:02.900 (mandatory 0.4s Silent Transition Buffer), with the camera now positioned directly in front of her, <Subject 1> smoothly turns her head to look directly into the camera lens, locking confident, pleasant eye contact with the viewer; during this fluid transition, her lips remain strictly motionless and firmly closed, strictly preventing speech bleed-through. Only at 00:02.900, once her gaze is fully locked onto the lens, <Subject 1> (S1) breaks into a bright, authentic conversational smile and articulates with clear lip-sync from 00:02.900 to 00:07.200: <d>[Chinese] 哎呀，冬天一千多关夏天什么事，现在直播间有反季活动，三折都不要。</d>. At 00:07.200, she finishes speaking and cleanly closes her lips. From 00:07.200 to 00:07.500, she blinks naturally and maintains a warm, genuine smile with relaxed breathing. Seamlessly and continuously without any cut or transition, the camera maintains its direct front perspective within the __MINIMAX_H3_REF_3__ environment, remaining steady at an eye-level comfortable medium shot framed from above the knees/mid-thighs (strictly keeping the complete outerwear silhouette, waistline, and garment hemline fully visible under the clean, shadowless diffused ambient lighting without tightening into any close-up or bust shot). From 00:07.500 to 00:09.200, the off-screen female voice (S2) asks cleanly from camera direction: <d>[Chinese] 这么划算，那你给我个链接呗。</d>. (Anti-crosstalk rule: throughout S2's question, <Subject 1> keeps her lips completely closed and relaxed, zero mouth movement, absolutely prohibited from opening her mouth early; hearing the request, her eyes light up with delightful enthusiasm, and she gracefully releases her right hand from the cart handle to raise it toward her upper chest, resting her palm flat and relaxed against the outer chest fabric of her outerwear from __MINIMAX_H3_REF_2__ to gently stroke the smooth material; strict negative constraint: the hand rests purely on the outer fabric surface; zero insertion into pockets, zero grabbing pockets, zero cloth penetration). From 00:09.200 to 00:09.600 (mandatory 0.4s Silent Transition Buffer), S2 has completely finished speaking; <Subject 1> keeps her palm resting gently on the outerwear fabric, nods affirmatively while locking warm eye contact directly into the lens, holding her lips firmly closed to eliminate crosstalk between question and answer. At 00:09.600, only after S2 has fully stopped and the 0.4s buffer has elapsed, <Subject 1> (S1) parts her lips to deliver with radiant, sincere confidence and articulate lip synchronization from 00:09.600 to 00:11.700: <d>[Chinese] 就在直播间，快去看看吧。</d>. At 00:11.700, she finishes speaking and cleanly closes her lips. From 00:11.700 to 00:12.000, under the same steady, uncut camera framing and bright, uniform diffused ambient lighting maintaining a comfortable medium shot showing the complete jacket silhouette and hemline against the airport background of __MINIMAX_H3_REF_3__, she holds a poised, authentic smile with relaxed living breathing, looking attentively toward the camera as the single continuous take smoothly concludes without abrupt cutoffs.\r\n\r\noverall_soundscape:\r\nSpacious airport terminal interior acoustics matching __MINIMAX_H3_REF_3__, natural approaching footstep sounds from the first-person perspective, subtle rolling sound of luggage cart rubber wheels over smooth floor tiles, faint distant announcement chimes, soft fabric rustle during hand stroke against the outerwear, and clean natural breathing pauses between vocal phrases.\r\n\r\nnon_diegetic_music:\r\nN/A\n",
+      "resolution": "480P",
+      "aspect_ratio": "9:16",
+      "width": 1344,
+      "height": 768,
+      "seconds": 12,
+      "advanced": true,
+      "fps": 24,
+      "keyframe_role": "first",
+      "ref_image_size": "2k",
+      "reference_mention_mode": "index",
+      "prompt_optimizer_settings": false,
+      "prompt_optimizer_scene_guide": "none",
+      "h3_bundle": [
+        "6",
+        0
+      ],
+      "media_1": [
+        "39",
+        0
+      ],
+      "media_type_1": "image",
+      "media_2": [
+        "291",
+        0
+      ],
+      "media_type_2": "image",
+      "media_3": [
+        "292",
+        0
+      ],
+      "media_type_3": "image",
+      "prompt_optimizer_resources": "[{\"type\":\"audio\",\"tag\":\"<Audio 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 1>\",\"name\":\"南汐女装_01.jpg\",\"asset\":{\"filename\":\"南汐女装_01.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 2>\",\"name\":\"SJYF3926.png\",\"asset\":{\"filename\":\"SJYF3926.png\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 3>\",\"name\":\"机场推车.png\",\"asset\":{\"filename\":\"机场推车.png\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 4>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 5>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 6>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}}]",
+      "prompt_optimizer_marker": "{}",
+      "prompt_optimizer_prompt_connected": false
+    },
+    "class_type": "MiniMaxH3Easy",
+    "_meta": {
+      "title": "MiniMax H3 Easy"
+    }
+  },
+  "8": {
+    "inputs": {
+      "h3_context": [
+        "7",
+        1
+      ]
+    },
+    "class_type": "MiniMaxH3EasyOutput",
+    "_meta": {
+      "title": "MiniMax H3 Easy 输出"
+    }
+  },
+  "9": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 0.74,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "10": {
+    "inputs": {
+      "noise": [
+        "14",
+        0
+      ],
+      "guider": [
+        "11",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "8",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model": [
+        "9",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "14": {
+    "inputs": {
+      "noise_seed": 361702265124409
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "15": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "16": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "一采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "5",
+        0
+      ],
+      "audio": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "39": {
+    "inputs": {
+      "image": "南汐女装_01.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "55": {
+    "inputs": {
+      "pixels": [
+        "64",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE编码"
+    }
+  },
+  "56": {
+    "inputs": {
+      "audio": [
+        "15",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEEncodeAudio",
+    "_meta": {
+      "title": "VAE编码（音频）"
+    }
+  },
+  "60": {
+    "inputs": {
+      "noise_seed": 906953887201831
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "61": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "64": {
+    "inputs": {
+      "width": [
+        "75",
+        0
+      ],
+      "height": [
+        "75",
+        1
+      ],
+      "upscale_method": "lanczos",
+      "keep_proportion": "crop",
+      "pad_color": "0, 0, 0",
+      "crop_position": "center",
+      "divisible_by": 32,
+      "device": "cpu",
+      "image": [
+        "290",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJv2",
+    "_meta": {
+      "title": "Resize Image v2"
+    }
+  },
+  "66": {
+    "inputs": {
+      "model": [
+        "7",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "68": {
+    "inputs": {
+      "noise": [
+        "60",
+        0
+      ],
+      "guider": [
+        "66",
+        0
+      ],
+      "sampler": [
+        "61",
+        0
+      ],
+      "sigmas": [
+        "76",
+        0
+      ],
+      "latent_image": [
+        "104",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "69": {
+    "inputs": {
+      "samples": [
+        "68",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "72": {
+    "inputs": {
+      "samples": [
+        "68",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "75": {
+    "inputs": {
+      "aspect_ratio": "9:16 (Portrait Widescreen)",
+      "megapixels": 1,
+      "multiple": 32
+    },
+    "class_type": "ResolutionSelector",
+    "_meta": {
+      "title": "分辨率选择器"
+    }
+  },
+  "76": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 4,
+      "denoise": 0.20000000000000004,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "93": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "YZ-H3-2采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "72",
+        0
+      ],
+      "audio": [
+        "69",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "94": {
+    "inputs": {
+      "anything": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "104": {
+    "inputs": {
+      "video_latent": [
+        "55",
+        0
+      ],
+      "audio_latent": [
+        "56",
+        0
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "LTXVConcatAVLatent"
+    }
+  },
+  "290": {
+    "inputs": {
+      "anything": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "291": {
+    "inputs": {
+      "image": "SJYF3926.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "292": {
+    "inputs": {
+      "image": "机场推车.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "296": {
+    "inputs": {
+      "anything": [
+        "93",
+        0
+      ]
+    },
+    "class_type": "easy clearCacheAll",
+    "_meta": {
+      "title": "清除全部缓存"
+    }
+  }
+}

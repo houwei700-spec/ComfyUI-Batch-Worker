@@ -1,0 +1,509 @@
+{
+  "5": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "6": {
+    "inputs": {
+      "fl2va_model": "无",
+      "ref2va_model": "minimax_h3_hybrid_fl2va_ref2va_b25-49-int8.safetensors",
+      "text_encoder": "qwen3vl_32b_minimax_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
+      "video_vae": "minimax_h3_video_vae_int8_convrot.safetensors",
+      "audio_vae": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "MiniMaxH3EasyLoader",
+    "_meta": {
+      "title": "MiniMax H3 Easy 加载器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "mode": "reference",
+      "prompt": "subject_definitions:\r\n<Subject 1> is the young Asian female presenter whose biological identity, facial bone structure, features, and exact hairstyle strictly come 100% from __MINIMAX_H3_REF_1__, whose apparel silhouette, cut, and details strictly come from __MINIMAX_H3_REF_2__, and whose body motion and posture transitions are executed naturally (completely isolated from any unwanted apparel or facial artifacts). She is speaker (S1).\r\n__MINIMAX_H3_REF_1__ is the person identity reference, defining all appearance details including facial features, bone structure, makeup, hair color, and exact hairstyle (every visual detail of the woman's face, makeup, and hairstyle/haircut is defined entirely by __MINIMAX_H3_REF_1__ and must be preserved faithfully with zero style drift or loose hair hallucination).\r\n__MINIMAX_H3_REF_2__ is the apparel reference, defining the outerwear silhouette, cut, collar, placket, pockets, quilting pattern, fabric texture, and original color.\r\n__MINIMAX_H3_REF_3__ is the strict first-frame keyframe anchor and scene reference. Its exact camera viewpoint, focal length, field of view, and framing geometry define the opening frame of [Shot 1] at 00:00.000 with 100% fidelity, seamlessly seating <Subject 1> onto the brown plush seat shown in __MINIMAX_H3_REF_3__ without altering the initial camera position or widening the shot.\r\n\r\nsummary:\r\n[keyframe completion + reference generation] The target video is a 15-second realistic continuous single-take (one-shot) lifestyle high-speed train e-commerce talking video. The opening frame at 00:00.000 strictly replicates the exact 1:1 camera viewpoint, angle, focal length, and spatial composition of __MINIMAX_H3_REF_3__ with 100% geometric fidelity, directly placing <Subject 1> (appearance from __MINIMAX_H3_REF_1__) seated in the brown plush seat of __MINIMAX_H3_REF_3__. The camera strictly maintains a single locked-axis forward line of sight: it begins with a pure, smooth forward axial push-in (dolly push-in) along the center aisle without any angular pan, tilt, or lateral translation, creating an authentic walking-in magnification effect. At exactly 00:03.500, the camera reaches a locked eye-level medium conversational framing (centered on <Subject 1> framed from mid-thigh up, with the brown seatback on the right, preceding seat row on the left, and window behind her) and immediately freezes into a 100% static, stationary locked-off shot for all remaining dialogue beats until 00:15.000. Wearing the outerwear from __MINIMAX_H3_REF_2__, <Subject 1> interacts warmly with an off-screen friendly female voice (speaker S2), explaining details of her jacket with collision-free, collision-buffered lip-sync synchronization. Negative constraints: camera panning, tilting, rolling, or lateral shifting during the push-in is strictly prohibited; any camera movement after 00:03.500 is strictly prohibited; overlapping dialogue is strictly prohibited; inserting hands into pockets is strictly prohibited; no subtitles, no watermarks.\r\n\r\nretention_analysis:\r\n<Subject 1> (appears throughout [Shot 1]): fully_preserved - facial bone structure, biological features, makeup, native hairstyle, and body proportions from __MINIMAX_H3_REF_1__ are faithfully preserved across the entire shot without altering hair style or length.\r\n__MINIMAX_H3_REF_1__: fully_preserved - facial bone structure, features, makeup, and original hairstyle are preserved faithfully.\r\n__MINIMAX_H3_REF_2__: fully_preserved - apparel silhouette, cut, quilting pattern, pockets, hardware, and original fabric color/texture are faithfully preserved without distortion.\r\n__MINIMAX_H3_REF_3__ ([Shot 1] first frame): fully_preserved - the exact camera position, focal length, perspective, and framing of __MINIMAX_H3_REF_3__ are preserved 100% as the opening frame, placing <Subject 1> directly into the brown seat with zero camera pullback, zero extra outer walls, and zero perspective change.\r\nNegative constraints enforced: camera rotation, lateral drift, or angular panning is strictly prohibited; continuing camera movement after 00:03.500 is strictly prohibited; overlapping dialogue is strictly prohibited; inserting hands into pockets is strictly prohibited; zero hand occlusion or pocket clipping.\r\n\r\ndetailed_description:\r\nThe target video adopts a clean, bright, realistic cinematography style with soft warm-white ceiling diffuse light inside the cabin, complemented by natural daylight filtering through large train windows where outdoor scenery swiftly glides past. The entire 15-second video is executed as a single, seamless, continuous shot without cuts, fast edits, subtitles, UI overlays, watermarks, or facial distortion. (Global negative constraints: camera rotation, tilting, swinging, or lateral drifting during the initial movement is strictly prohibited; continuing camera movement, forward tracking, or pushing in after 00:03.500 is strictly prohibited, the camera must be completely locked-off and stationary from 00:03.500 to 00:15.000; changing, widening, or pulling back the camera framing from __MINIMAX_H3_REF_3__ is strictly prohibited; overlapping speech lines is strictly prohibited; inserting hands into pockets is strictly prohibited).\r\n[Shot 1] The opening frame at 00:00.000 strictly and flawlessly replicates the exact 1:1 camera viewpoint, focal length, perspective, and composition of __MINIMAX_H3_REF_3__ (identical in framing, crop, and camera angle to __MINIMAX_H3_REF_3__ with 100% geometric fidelity, strictly avoiding any camera pullback or widening): <Subject 1> is seated directly in the brown plush seat of __MINIMAX_H3_REF_3__ in the exact spatial location shown in __MINIMAX_H3_REF_3__. <Subject 1> (she properly wears the exact outerwear from __MINIMAX_H3_REF_2__ with both arms inserted completely inside the sleeves (faithfully maintaining 100% of its cut, silhouette, original color, fabric texture, quilting pattern, collar, placket, pockets, and hardware details exactly as shown in __MINIMAX_H3_REF_2__), styled naturally in a semi-open fashion down the front revealing a regular hip-length black turtleneck base sweater beneath, paired with black skinny pants and black knee-high leather boots; faithfully maintaining 100% of her facial features, makeup, and exact hairstyle directly as shown in __MINIMAX_H3_REF_1__). From 00:00.000 to 00:01.000, <Subject 1> is seated upright facing forward relative to the train seat, presenting a clean 90-degree right side profile directly toward the aisle entrance camera; her legs extend naturally forward, and she holds her smartphone comfortably with both hands in front of her chest, head tilted gently downward, intently and peacefully looking at the screen with lips closed in quiet living concentration. From 00:00.000 to 00:03.500, maintaining a strictly locked line-of-sight perspective without any angular rotation, camera tilt, or lateral deviation, the camera executes a pure straight-ahead axial push-in (forward dolly along the center aisle), smoothly magnifying the scene forward from the entrance of __MINIMAX_H3_REF_3__ directly toward <Subject 1>. At 00:01.000, an off-screen friendly female voice (S2) speaks from camera side: <d>[Chinese] 哎，美女，你身上这件衣服很好看，我想问你要个链接，可以吗？</d>. Hearing the call, <Subject 1>'s body trunk remains seated forward while her head gently and naturally pivots toward the approaching aisle camera; her gaze lifts from the phone to meet the oncoming lens, her eyes lighting up with an attentive, polite curiosity and a subtle warm smile, while her lips remain strictly sealed without premature mouth opening or lip movement. At exactly 00:03.500, the camera smoothly and completely stops all forward motion, precisely settling into an eye-level medium conversational composition (framed from mid-thigh up, flanked by the brown plush seatback on the right, the rear of the front seat row on the left, and the sunlit train window with passing landscape behind her); simultaneously, as the visitor arrives, <Subject 1> naturally eases her upper torso into an open, relaxed three-quarter (3/4) angled posture toward the camera (legs resting forward, upper body angled naturally about 30 to 45 degrees toward the aisle camera, face turned directly toward the lens with a bright, welcoming white-teeth smile). Rigid camera lock rule: from 00:03.500 to the very end of the video at 00:15.000, the camera strictly locks and freezes into this exact composition as a 100% stationary, static shot across all subsequent action beats (strictly prohibited from any further push-in, forward tracking, zooming, panning, or positional drifting; preserving only subtle, natural organic handheld breathing presence). At 00:03.500, in this locked stationary fixed medium shot and relaxed 3/4 angled posture, <Subject 1> (S1) raises her left hand naturally from her phone to make a friendly conversational gesture, her eyes bright and confident as she delivers with precise, clear lip-sync: <d>[Chinese] 可以啊，我分享给你，我在直播间买的。</d>, finishing at 00:05.500 with lips gently closed. At 00:05.800, under the same locked stationary fixed camera, she keeps the 3/4 angled body posture, chuckles softly and lowers her gaze to look at her phone as if finding the product link, while the off-screen friendly female voice (S2) asks: <d>[Chinese] 质量咋样，你感觉？</d>. <Subject 1> smiles quietly as she looks at her phone, keeping her lips closed and relaxed. At 00:07.000, holding the locked stationary fixed medium shot without moving, she lifts her head with a radiant smile looking straight into the lens, naturally resting her left hand flat and relaxed against the surface of her outerwear from __MINIMAX_H3_REF_2__, gently stroking the fabric to gracefully demonstrate the garment's smooth texture, articulating with clear, unhurried lip-sync from 00:07.000 to 00:09.500: <d>[Chinese] 款式新颖又大方，穿着大小正合适。</d>. At 00:09.500, she closes her lips completely with a brief natural breathing pause. At 00:09.800, with the camera remaining strictly stationary and fixed, after S1 has fully finished speaking, the off-screen friendly female voice (S2) replies cleanly without overlapping: <d>[Chinese] 好，那我也买一件。</d> from 00:09.800 to 00:11.200; during this time, <Subject 1> brings both hands comfortably together in front of her, leans forward slightly in an engaging, approachable posture, and nods subtly with lips strictly closed while listening. At 00:11.500, under the locked stationary fixed camera with a clean 0.3-second conversational buffer, <Subject 1> (S1) gently straightens her posture, holds her phone softly with both hands in front of her, and delivers with sincere, affirmative lip-sync from 00:11.500 to 00:14.500: <d>[Chinese] 嗯，直播间现在都是现货现发的，两三天就收到货了。</d>. At 00:14.500, the stationary fixed camera holds steady for a 0.5-second natural breathing pause, capturing her relaxed, poised, authentic smile as the continuous take smoothly concludes.\r\n\r\noverall_soundscape:\r\nLow-frequency high-speed train cabin hum, smooth rail glide sound, subtle movement of outdoor wind against the sealed glass, faint fabric rustle from the outerwear during arm movement, and soft natural breathing between vocal phrases.\r\n\r\nnon_diegetic_music:\r\nN/A\n",
+      "resolution": "480P",
+      "aspect_ratio": "9:16",
+      "width": 1344,
+      "height": 768,
+      "seconds": 15,
+      "advanced": true,
+      "fps": 24,
+      "keyframe_role": "first",
+      "ref_image_size": "2k",
+      "reference_mention_mode": "index",
+      "prompt_optimizer_settings": false,
+      "prompt_optimizer_scene_guide": "none",
+      "h3_bundle": [
+        "6",
+        0
+      ],
+      "media_1": [
+        "39",
+        0
+      ],
+      "media_type_1": "image",
+      "media_2": [
+        "291",
+        0
+      ],
+      "media_type_2": "image",
+      "media_3": [
+        "292",
+        0
+      ],
+      "media_type_3": "image",
+      "prompt_optimizer_resources": "[{\"type\":\"audio\",\"tag\":\"<Audio 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 1>\",\"name\":\"南汐女装_01.jpg\",\"asset\":{\"filename\":\"南汐女装_01.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 2>\",\"name\":\"SJYF3926.png\",\"asset\":{\"filename\":\"SJYF3926.png\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 3>\",\"name\":\"列车.jpg\",\"asset\":{\"filename\":\"列车.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 4>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 5>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 6>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}}]",
+      "prompt_optimizer_marker": "{}",
+      "prompt_optimizer_prompt_connected": false
+    },
+    "class_type": "MiniMaxH3Easy",
+    "_meta": {
+      "title": "MiniMax H3 Easy"
+    }
+  },
+  "8": {
+    "inputs": {
+      "h3_context": [
+        "7",
+        1
+      ]
+    },
+    "class_type": "MiniMaxH3EasyOutput",
+    "_meta": {
+      "title": "MiniMax H3 Easy 输出"
+    }
+  },
+  "9": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 0.74,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "10": {
+    "inputs": {
+      "noise": [
+        "14",
+        0
+      ],
+      "guider": [
+        "11",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "8",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model": [
+        "9",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "14": {
+    "inputs": {
+      "noise_seed": 617965394886790
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "15": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "16": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "一采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "5",
+        0
+      ],
+      "audio": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "39": {
+    "inputs": {
+      "image": "南汐女装_01.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "55": {
+    "inputs": {
+      "pixels": [
+        "64",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE编码"
+    }
+  },
+  "56": {
+    "inputs": {
+      "audio": [
+        "15",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEEncodeAudio",
+    "_meta": {
+      "title": "VAE编码（音频）"
+    }
+  },
+  "60": {
+    "inputs": {
+      "noise_seed": 740501754598444
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "61": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "64": {
+    "inputs": {
+      "width": [
+        "75",
+        0
+      ],
+      "height": [
+        "75",
+        1
+      ],
+      "upscale_method": "lanczos",
+      "keep_proportion": "crop",
+      "pad_color": "0, 0, 0",
+      "crop_position": "center",
+      "divisible_by": 32,
+      "device": "cpu",
+      "image": [
+        "290",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJv2",
+    "_meta": {
+      "title": "Resize Image v2"
+    }
+  },
+  "66": {
+    "inputs": {
+      "model": [
+        "7",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "68": {
+    "inputs": {
+      "noise": [
+        "60",
+        0
+      ],
+      "guider": [
+        "66",
+        0
+      ],
+      "sampler": [
+        "61",
+        0
+      ],
+      "sigmas": [
+        "76",
+        0
+      ],
+      "latent_image": [
+        "104",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "69": {
+    "inputs": {
+      "samples": [
+        "68",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "72": {
+    "inputs": {
+      "samples": [
+        "68",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "75": {
+    "inputs": {
+      "aspect_ratio": "9:16 (Portrait Widescreen)",
+      "megapixels": 1,
+      "multiple": 32
+    },
+    "class_type": "ResolutionSelector",
+    "_meta": {
+      "title": "分辨率选择器"
+    }
+  },
+  "76": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 4,
+      "denoise": 0.20000000000000004,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "93": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "YZ-H3-2采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "72",
+        0
+      ],
+      "audio": [
+        "69",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "94": {
+    "inputs": {
+      "anything": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "104": {
+    "inputs": {
+      "video_latent": [
+        "55",
+        0
+      ],
+      "audio_latent": [
+        "56",
+        0
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "LTXVConcatAVLatent"
+    }
+  },
+  "290": {
+    "inputs": {
+      "anything": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "291": {
+    "inputs": {
+      "image": "SJYF3926.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "292": {
+    "inputs": {
+      "image": "列车.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "296": {
+    "inputs": {
+      "anything": [
+        "93",
+        0
+      ]
+    },
+    "class_type": "easy clearCacheAll",
+    "_meta": {
+      "title": "清除全部缓存"
+    }
+  }
+}

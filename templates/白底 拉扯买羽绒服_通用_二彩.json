@@ -1,0 +1,495 @@
+{
+  "5": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "6": {
+    "inputs": {
+      "fl2va_model": "无",
+      "ref2va_model": "minimax_h3_hybrid_fl2va_ref2va_b25-49-int8.safetensors",
+      "text_encoder": "qwen3vl_32b_minimax_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
+      "video_vae": "minimax_h3_video_vae_int8_convrot.safetensors",
+      "audio_vae": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "MiniMaxH3EasyLoader",
+    "_meta": {
+      "title": "MiniMax H3 Easy 加载器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "mode": "reference",
+      "prompt": "subject_definitions:\r\n<Subject 1> is the female lead character whose biological identity, facial likeness, facial features, bone structure, skin tone, and exact hairstyle strictly come 100% from __MINIMAX_H3_REF_1__ (every visual detail of the woman's face, facial likeness, makeup, and exact hairstyle is defined entirely by __MINIMAX_H3_REF_1__ and must be preserved faithfully with zero style drift, zero face replacement, and zero hair hallucination).\r\n<Subject 2> is the complete upper-body outerwear garment from __MINIMAX_H3_REF_2__; all visual details including its cut, silhouette, color, fabric texture, quilted baffles, collar structure, lapel fold, neckline opening degree, front placket fastening, hems, and cuffs strictly replicate 100% of the real-wear styling shown in __MINIMAX_H3_REF_2__ without altering its original collar style or closure state, strictly isolated from any lower-body elements in __MINIMAX_H3_REF_2__.\r\n<Subject 3> is the universal lower-body apparel: wearing black skinny pants and black knee-high leather boots (completely isolated from and ignoring any lower-body elements in __MINIMAX_H3_REF_2__).\r\n<Scene 1> is a minimalist, pure white seamless cyclorama studio (clean white cyc studio) under bright, professional, and uniformly diffused studio softbox illumination (high CRI, soft shadow roll-off, zero harsh direct glare, zero cast shadows).\r\n\r\nsummary:\r\n[reference generation] The target video is a 12.000-second live-action e-commerce comedy commercial in vertical 9:16 aspect ratio, captured in a continuous single static take. <Subject 1> (from __MINIMAX_H3_REF_1__), wearing <Subject 2> (the upper-body outerwear garment faithfully matching __MINIMAX_H3_REF_2__ in collar fold, cut, and closure degree) and <Subject 3>, stands in the center of <Scene 1> in a deep backward lunge, playfully pulling the sleeve cuff of an unseen off-screen person in a comedic tug-of-war while delivering lively Chinese dialogue.\r\n\r\nretention_analysis:\r\n<Subject 1> (appears in [Shot 1]): fully_preserved - the woman's face, biological identity, skin tone, facial likeness, makeup, and exact hairstyle are defined entirely by __MINIMAX_H3_REF_1__ and preserved 100% with absolute fidelity across all frames.\r\n<Subject 2> (appears in [Shot 1]): fully_preserved - every visual detail of the upper-body outerwear garment from __MINIMAX_H3_REF_2__ is retained 100% faithfully, strictly maintaining the exact collar shape, lapel fold, placket closure degree, and any attached elements exactly as presented in __MINIMAX_H3_REF_2__ (isolated from any lower garments in __MINIMAX_H3_REF_2__).\r\n<Scene 1> (appears in [Shot 1]): fully_preserved - the clean, pure white seamless cyclorama studio environment remains completely consistent throughout the entire shot.\r\n\r\ndetailed_description:\r\n[Shot 1] The scene is set in <Scene 1>, framed in vertical 9:16 aspect ratio in authentic live-action cinematic quality. The camera holds a completely static comfortable medium shot framed from above the knees/thighs throughout the entire 12.000 seconds, maintaining <Subject 1> centrally framed with absolutely zero camera pans, cuts, or zooms (close-up shots, tight bust-level crops, and head-and-shoulders framing are strictly prohibited; the camera must maintain comfortable medium framing throughout the video to ensure full apparel silhouette and garment hemline remain clearly visible at all times). Lighting is bright, clean, and uniformly diffused studio softbox illumination, eliminating harsh direct sunlight beams, blinding glare, and stark cast shadows.\r\n<Subject 1> faithfully maintains 100% of her facial identity, facial likeness, makeup, and exact hairstyle directly as shown in __MINIMAX_H3_REF_1__ across every frame. She wears <Subject 2>, strictly preserving its original cut, fabric texture, placket closure degree, and exact collar styling directly as shown in __MINIMAX_H3_REF_2__. She pairs it with <Subject 3> (black skinny pants and black knee-high leather boots). Zero extraneous crossbody bags, belts, or uncalled jewelry.\r\n<Subject 1> stands in the center of the frame, leaning backward in a deep, exaggerated lunge stance with both legs planted wide apart, firmly gripping with both hands the white sleeve cuff of an unseen person entering from the far left frame edge. The other person remains completely off-screen, with only their white-sleeved forearm and hand visible. <Subject 1> maintains this dynamic, playful tug-of-war pulling tension throughout the scene.\r\n\r\nAction Sequence & Anti-Crosstalk Physical Audio Rules:\r\n00:00.000 - 00:00.600: <Subject 1> takes a deep breath, cheeks puffing slightly with playful effort, leaning her body back into a deep tug-of-war lunge as shoulders sway with the pull. She speaks with coquettish nasal warmth: <d>[Chinese] 哎呀</d>.\r\n00:00.600 - 00:01.300: <Subject 1> dips her head briefly, then raises her chin with an endearing, pleading smile: <d>[Chinese] 给我买</d>.\r\n00:01.300 - 00:02.200: <Subject 1> looks up from under her brows, eyes sparkling with quick blinks, speaking softly: <d>[Chinese] 羽绒服好喜欢</d>. At 00:02.200, she instantly seals her lips firmly.\r\n00:02.200 - 00:02.500: [Silent Transition Buffer] 0.3-second silent pause. <Subject 1> keeps her lips firmly closed.\r\n00:02.500 - 00:03.400: An off-screen male voice (S2) sighs with helpless surrender: <d>[Chinese] 我可买不起</d>. (<Subject 1> keeps her lips firmly closed and completely immobile throughout S2's line, watching him with playful obstinacy).\r\n00:03.400 - 00:03.700: [Silent Transition Buffer] 0.3-second silent pause. <Subject 1> pouts playfully, shakes her head, arches one eyebrow with a suppressed smirk.\r\n00:03.700 - 00:04.500: <Subject 1> delivers with a rhythmic singsong cadence: <d>[Chinese] 直播间爆款</d>.\r\n00:04.500 - 00:05.300: <Subject 1> continues pulling as her eyes light up excitedly: <d>[Chinese] 但是它好好看呀</d>.\r\n00:05.300 - 00:06.100: <Subject 1> momentarily releases her left hand, using her thumb to point proudly back toward the down jacket on her shoulder with an assertive smirk, then immediately re-grips the cuff, tilting her head: <d>[Chinese] 买一下怎么啦</d>. At 00:06.100, she instantly seals her lips firmly.\r\n00:06.100 - 00:06.400: [Silent Transition Buffer] 0.3-second silent pause. Lips remain sealed.\r\n00:06.400 - 00:07.100: The off-screen male voice (S2) chuckles with bewildered helplessness: <d>[Chinese] 你大热天的</d>. (<Subject 1> keeps her lips firmly closed and completely immobile throughout S2's line).\r\n00:07.100 - 00:07.400: [Silent Transition Buffer] 0.3-second silent pause. <Subject 1> playfully rolls her eyes, pouting her lips and slightly wrinkling her nose.\r\n00:07.400 - 00:08.000: <Subject 1> delivers a rapid, spirited rebuttal: <d>[Chinese] 你懂啥呀</d>.\r\n00:08.000 - 00:08.900: <Subject 1> leans her torso slightly forward as she shifts weight, boot toe tapping the floor in rhythm: <d>[Chinese] 就是反季活动买呀</d>.\r\n00:08.900 - 00:09.400: <Subject 1> nods firmly with a satisfied, beaming smile: <d>[Chinese] 划算</d>. At 00:09.400, she instantly closes her lips firmly.\r\n00:09.400 - 00:09.700: [Silent Transition Buffer] 0.3-second silent pause. Lips remain sealed.\r\n00:09.700 - 00:10.400: The off-screen male voice (S2) shifts into intrigued curiosity: <d>[Chinese] 啊反季活动</d>. (<Subject 1> keeps her lips firmly closed throughout S2's line).\r\n00:10.400 - 00:10.600: [Silent Transition Buffer] 0.2-second silent pause. <Subject 1> winks playfully.\r\n00:10.600 - 00:11.100: <Subject 1> points her thumb back toward the jacket again: <d>[Chinese] 就在直播间</d>.\r\n00:11.100 - 00:11.500: <Subject 1> delivers bright, cheerful affirmation: <d>[Chinese] 可以买到</d>. At 00:11.500, she instantly seals her lips firmly.\r\n00:11.500 - 00:12.000: The off-screen male voice (S2) responds eagerly in rapid excitement: <d>[Chinese] 啊那快去抢一件</d>. (<Subject 1> keeps her lips firmly closed, holding an amused, victorious smirk with one eyebrow arched, maintaining her firm pulling posture and steady breathing as the clip ends cleanly at 00:12.000).\r\n\r\noverall_soundscape:\r\nQuiet, pristine studio soundscape. Crisp fabric rustle occurs on every lunge movement, accompanied by the light friction of boot soles against the seamless paper floor. Natural inhalation sounds before speaking, cute exertion breath puffs during pulling, and cloth tension sounds during backward tugs. Off-screen male voice possesses realistic room proximity and acoustics, creating a vivid conversational dynamic.\r\n\r\nnon_diegetic_music:\r\nLighthearted and bouncy acoustic comedy background music, featuring upbeat ukulele strumming, a simple kick-and-snare groove, and a playful walking bassline at moderate tempo. A subtle comedic pluck accent punctuates the moment when the male voice turns persuaded at the end.\n",
+      "resolution": "480P",
+      "aspect_ratio": "9:16",
+      "width": 1344,
+      "height": 768,
+      "seconds": 12,
+      "advanced": true,
+      "fps": 24,
+      "keyframe_role": "first",
+      "ref_image_size": "2k",
+      "reference_mention_mode": "index",
+      "prompt_optimizer_settings": false,
+      "prompt_optimizer_scene_guide": "none",
+      "h3_bundle": [
+        "6",
+        0
+      ],
+      "media_1": [
+        "39",
+        0
+      ],
+      "media_type_1": "image",
+      "media_2": [
+        "291",
+        0
+      ],
+      "media_type_2": "image",
+      "prompt_optimizer_resources": "[{\"type\":\"audio\",\"tag\":\"<Audio 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 1>\",\"name\":\"迷苏服饰_01.jpg\",\"asset\":{\"filename\":\"迷苏服饰_01.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 2>\",\"name\":\"SJYH3901.png\",\"asset\":{\"filename\":\"SJYH3901.png\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 4>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 5>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 6>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}}]",
+      "prompt_optimizer_marker": "{}",
+      "prompt_optimizer_prompt_connected": false
+    },
+    "class_type": "MiniMaxH3Easy",
+    "_meta": {
+      "title": "MiniMax H3 Easy"
+    }
+  },
+  "8": {
+    "inputs": {
+      "h3_context": [
+        "7",
+        1
+      ]
+    },
+    "class_type": "MiniMaxH3EasyOutput",
+    "_meta": {
+      "title": "MiniMax H3 Easy 输出"
+    }
+  },
+  "9": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 0.74,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "10": {
+    "inputs": {
+      "noise": [
+        "14",
+        0
+      ],
+      "guider": [
+        "11",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "8",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model": [
+        "9",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "14": {
+    "inputs": {
+      "noise_seed": 1099932071965168
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "15": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "16": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "一采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "5",
+        0
+      ],
+      "audio": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "39": {
+    "inputs": {
+      "image": "迷苏服饰_01.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "55": {
+    "inputs": {
+      "pixels": [
+        "64",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE编码"
+    }
+  },
+  "56": {
+    "inputs": {
+      "audio": [
+        "15",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEEncodeAudio",
+    "_meta": {
+      "title": "VAE编码（音频）"
+    }
+  },
+  "60": {
+    "inputs": {
+      "noise_seed": 358667247270681
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "61": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "64": {
+    "inputs": {
+      "width": [
+        "75",
+        0
+      ],
+      "height": [
+        "75",
+        1
+      ],
+      "upscale_method": "lanczos",
+      "keep_proportion": "crop",
+      "pad_color": "0, 0, 0",
+      "crop_position": "center",
+      "divisible_by": 32,
+      "device": "cpu",
+      "image": [
+        "290",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJv2",
+    "_meta": {
+      "title": "Resize Image v2"
+    }
+  },
+  "66": {
+    "inputs": {
+      "model": [
+        "7",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "68": {
+    "inputs": {
+      "noise": [
+        "60",
+        0
+      ],
+      "guider": [
+        "66",
+        0
+      ],
+      "sampler": [
+        "61",
+        0
+      ],
+      "sigmas": [
+        "76",
+        0
+      ],
+      "latent_image": [
+        "104",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "69": {
+    "inputs": {
+      "samples": [
+        "68",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "72": {
+    "inputs": {
+      "samples": [
+        "68",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "75": {
+    "inputs": {
+      "aspect_ratio": "9:16 (Portrait Widescreen)",
+      "megapixels": 1,
+      "multiple": 32
+    },
+    "class_type": "ResolutionSelector",
+    "_meta": {
+      "title": "分辨率选择器"
+    }
+  },
+  "76": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 4,
+      "denoise": 0.20000000000000004,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "93": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "YZ-H3-2采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "72",
+        0
+      ],
+      "audio": [
+        "69",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "94": {
+    "inputs": {
+      "anything": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "104": {
+    "inputs": {
+      "video_latent": [
+        "55",
+        0
+      ],
+      "audio_latent": [
+        "56",
+        0
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "LTXVConcatAVLatent"
+    }
+  },
+  "290": {
+    "inputs": {
+      "anything": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "291": {
+    "inputs": {
+      "image": "SJYH3901.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "296": {
+    "inputs": {
+      "anything": [
+        "93",
+        0
+      ]
+    },
+    "class_type": "easy clearCacheAll",
+    "_meta": {
+      "title": "清除全部缓存"
+    }
+  }
+}

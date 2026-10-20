@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>提示词视频测试 · ComfyUI Batch Hub</title><link rel="stylesheet" href="/css/studio.css?v=20260923_parallel1"><link rel="stylesheet" href="/css/prompt-lab.css?v=20260925_library1"><script src="/js/layout.js?v=20260918_proportional1"></script><link rel="stylesheet" href="/css/document-import-20261004.css?v=1"><link rel="stylesheet" href="/css/prompt-lab-20261004.css?v=1"><link rel="stylesheet" href="/css/dialogue-editor-20261005.css?v=1"></head>
+<body>
+
+<header class="header"><div class="brand"><span class="brand-mark">▶</span><div><span class="brand-caption">ComfyUI Batch Hub</span><h1 id="lab_page_title">提示词视频测试</h1></div></div><nav class="lab-mode-tabs" aria-label="生成模式"><a data-mode="480p" href="/prompt-lab.html">480p 提示词测试</a><a data-mode="single768p" href="/prompt-lab.html?mode=single768p">一彩768p</a><a data-mode="768p" href="/prompt-lab.html?mode=768p">二彩928p</a></nav><nav class="header-actions"><a class="header-button outline" href="/">模板生产 / 端口管理</a><a id="lab_mode_link" href="/prompt-lab.html?mode=768p" hidden>二彩928p</a></nav></header>
+<main class="lab-layout">
+<aside class="lab-composer">
+<h2>本批次参考素材</h2><p class="lab-muted">人物与服装必填，场景可选。本批次任务共用这些图片。</p><button type="button" id="refresh_library" class="lab-link">刷新系统素材列表</button>
+<div class="lab-upload"><label for="model_saved">人物头像 <span>Picture 1</span></label><select id="model_saved" class="lab-saved-select" aria-label="从系统素材选择人物头像"><option value="">从系统模特中选择…</option></select><div class="lab-upload-body"><img id="model_image" alt="人物预览" hidden><span class="lab-upload-or">或上传新图片</span><input id="model_file" type="file" aria-label="上传新人物头像" accept="image/png,image/jpeg,image/webp,image/bmp"></div><small id="model_name">尚未选择</small></div>
+<div class="lab-upload"><label for="apparel_saved">服装图片 <span>Picture 2</span></label><select id="apparel_saved" class="lab-saved-select" aria-label="从系统素材选择服装图片"><option value="">从系统服装中选择…</option></select><div class="lab-upload-body"><img id="apparel_image" alt="服装预览" hidden><span class="lab-upload-or">或上传新图片</span><input id="apparel_file" type="file" aria-label="上传新服装图片" accept="image/png,image/jpeg,image/webp,image/bmp"></div><small id="apparel_name">尚未选择</small><button id="clear_apparel" class="lab-link" hidden>移除服装</button></div>
+<div class="lab-upload"><label for="scene_saved">场景图片 <span>Picture 3 · 可选</span></label><select id="scene_saved" class="lab-saved-select" aria-label="从系统素材选择场景图片"><option value="">不使用场景图</option></select><div class="lab-upload-body"><img id="scene_image" alt="场景预览" hidden><span class="lab-upload-or">或上传新图片</span><input id="scene_file" type="file" aria-label="上传新场景图片" accept="image/png,image/jpeg,image/webp,image/bmp"></div><small id="scene_name">不使用场景图</small><button id="clear_scene" class="lab-link">移除场景</button></div>
+<p class="lab-muted">支持 JPG / PNG / WEBP / BMP；大图自动优化，原图保留。素材随任务保存，启动后上传到执行端口。</p>
+<label for="lab_server">执行端口</label><select id="lab_server" aria-label="执行端口"></select>
+<p class="lab-muted">单端口依次执行；全部启用端口可并行。暂停只停止领取，已提交任务继续生成和回传。</p>
+<div id="lab_workers" aria-label="各端口任务状态"></div></aside>
+<section class="lab-center">
+<div class="lab-section-heading"><div><h2 id="editor_heading">编写测试任务</h2><span id="draft_count" class="draft-badge"></span><p class="lab-muted" id="editor_hint">每条提示词对应一条视频，可设置不同的时长。</p></div><button class="btn secondary small" id="add_row">＋ 添加一条</button></div>
+<div id="document_drop" class="document-drop">
+<div><strong>导入提示词文档</strong><span>拖入 .md / .txt，自动拆成任务；保留当前已填写内容。</span></div>
+<button type="button" id="document_choose" class="btn secondary small">选择文档</button>
+<button class="btn secondary small" id="dialogue_open">提取 / 编辑文案</button><button class="lab-link" id="dialogue_undo">撤销文案回填</button><button class="btn secondary small" id="import_open">批量 JSON</button>
+<input id="document_file" type="file" accept=".md,.txt,text/plain,text/markdown" hidden>
+</div><p id="document_feedback" class="document-feedback" role="status" hidden></p>
+<div id="draft_rows" class="lab-drafts"></div>
+<div class="lab-draft-actions"><span id="draft_total" class="draft-total"></span><button class="btn" id="enqueue">加入测试队列</button></div>
+<div class="lab-section-heading lab-queue-heading"><div><h2 id="queue_heading">480p 测试队列 <span id="task_count">0</span></h2><p id="lab_status" class="lab-muted">默认暂停 · 等待手动启动</p><p id="queue_hint" class="lab-muted">测试满意后，点击任务或视频下方的「加入一彩768p队列」或「加入二彩928p队列」，会复制该任务的文案、时长和参考图。</p></div><div class="lab-buttons"><button class="btn small" id="lab_start">▶ 启动队列</button><button class="btn secondary small" id="lab_pause">Ⅱ 暂停队列</button></div></div>
+<div id="lab_notice" role="status" class="lab-notice" hidden></div>
+<div class="queue-toolbar"><div id="queue_filters" class="queue-filters" aria-label="按任务状态筛选"><button data-filter="" class="active">全部 <span>0</span></button><button data-filter="PENDING">待启动 <span>0</span></button><button data-filter="ACTIVE">生成中 <span>0</span></button><button data-filter="DONE">已完成 <span>0</span></button><button data-filter="FAILED">失败 <span>0</span></button><button data-filter="REVIEW">待核对 <span>0</span></button></div><input id="queue_search" type="search" aria-label="搜索任务" placeholder="搜索任务 / 提示词"></div><div class="lab-table-scroll"><table class="lab-table"><thead><tr><th>任务</th><th>提示词</th><th>时长</th><th>状态</th><th>操作</th></tr></thead><tbody id="lab_tasks"></tbody></table><p id="empty_queue" class="lab-empty">还没有测试任务。上传素材，填写提示词后加入队列。</p></div>
+<div class="queue-pagination"><span id="queue_total">共 0 条记录</span><div><button id="queue_prev" aria-label="上一页">‹</button><span id="queue_page">1 / 1</span><button id="queue_next" aria-label="下一页">›</button></div></div></section>
+<aside class="lab-preview"><div class="preview-heading"><h2>画面对照</h2><span>9:16 · 原比例</span></div><div class="portrait-frame"><video id="lab_video" controls playsinline hidden></video><div id="lab_video_empty" class="preview-empty"><span>▷</span><strong>查看提示词的生成效果</strong><p>点击任务「详情 / 播放」<br>对照提示词和视频画面</p></div></div><div class="lab-detail"><h3 id="detail_title">尚未选择任务</h3><p id="detail_meta" class="lab-muted"></p><div id="detail_assets" class="lab-detail-assets"></div><details class="prompt-details"><summary>展开完整提示词</summary><pre id="detail_prompt">选择一条任务，查看完整提示词。</pre></details><p id="detail_error" role="status"></p><button id="promote_single" class="btn small" hidden>加入一彩768p队列</button><button id="promote_video" class="btn small" hidden>加入二彩928p队列</button><a id="promote_link" class="promotion-note" href="/prompt-lab.html?mode=768p" hidden></a><button id="locate_video" class="btn secondary small" disabled>定位视频文件 ↗</button></div></aside>
+</main>
+<dialog id="import_dialog"><form method="dialog"><div class="lab-section-heading"><h2>批量粘贴任务</h2><button class="btn secondary small" value="cancel">关闭</button></div><p>每项填写 prompt 和 seconds；导入后可逐条调整。每批最多 500 条，可继续追加。</p><textarea id="import_text" aria-label="批量任务 JSON" placeholder='[{"prompt":"你的提示词","seconds":15},{"prompt":"另一条提示词","seconds":10}]'></textarea><p id="import_error"></p><button type="button" class="btn" id="import_apply">追加到编辑区</button></form></dialog>
+<dialog id="document_dialog" aria-labelledby="document_heading">
+<div class="lab-section-heading"><h2 id="document_heading">核对导入任务</h2><button type="button" id="document_cancel" class="btn secondary small">取消</button></div>
+<p id="document_summary"></p><p id="document_warnings" class="document-warning" hidden></p>
+<div class="document-default"><label>未识别时长时使用 <input id="document_default" type="number" min="0.2" max="30" step="0.1" value="15" aria-label="统一默认时长"> 秒</label><button type="button" id="document_fill" class="btn secondary small">填入空缺时长</button></div>
+<div id="document_rows" class="document-rows"></div>
+<label id="document_duplicate" class="document-warning" hidden><input id="document_duplicate_ok" type="checkbox"> 此文档或部分提示词已经导入，仍要再次追加</label>
+<p id="document_error" role="alert"></p>
+<div class="document-footer"><span>只追加到编写区，随后仍可编辑。</span><button type="button" id="document_apply" class="btn">追加到任务编写区</button></div>
+</dialog>
+<div id="lab_toast" role="status" hidden></div><script src="/js/queue-view-20261004.js?v=1"></script><script src="/js/prompt-lab-features-20261010.js?v=1"></script>
+<script src="/js/document-parser-20261004.js?v=1"></script><script src="/js/document-import-20261010.js?v=1"></script>
+<script src="/js/dialogue-core-tags-20261005.js?v=1"></script><script src="/js/dialogue-batch-tags-20261010.js?v=1"></script></body></html>
+

@@ -1,0 +1,298 @@
+{
+  "5": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "6": {
+    "inputs": {
+      "fl2va_model": "无",
+      "ref2va_model": "minimax_h3_ref2va_int8_convrot.safetensors",
+      "text_encoder": "qwen3vl_32b_minimax_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
+      "video_vae": "minimax_h3_video_vae_int8_convrot.safetensors",
+      "audio_vae": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "MiniMaxH3EasyLoader",
+    "_meta": {
+      "title": "MiniMax H3 Easy 加载器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "mode": "reference",
+      "prompt": "subject_definitions:\r\n<Subject 1> is the young Asian female presenter whose biological identity, facial bone structure, features, and exact hairstyle strictly come 100% from __MINIMAX_H3_REF_1__, whose apparel silhouette, cut, and details strictly come from __MINIMAX_H3_REF_2__, and whose body motion and posture transitions are executed naturally (completely isolated from any unwanted apparel or facial artifacts). She is speaker (S2).\r\n__MINIMAX_H3_REF_1__ is the person identity reference, defining all appearance details including facial features, bone structure, makeup, hair color, and exact hairstyle (every visual detail of the woman's face, makeup, and hairstyle/haircut is defined entirely by __MINIMAX_H3_REF_1__ and must be preserved faithfully with zero style drift or loose hair hallucination).\r\n__MINIMAX_H3_REF_2__ is the apparel reference, defining the outerwear silhouette, cut, collar, placket, pockets, quilting pattern, fabric texture, and original color.\r\n__MINIMAX_H3_REF_3__ is the first-frame keyframe anchor and scene reference for [Shot 1], defining the luxury indoor garage with polished marble floor, light beige stone wall with dark marble accents, linear ceiling light strips, metal-framed glass doors, and the silver-gray electric coupe with its right passenger door open.\r\n\r\nsummary:\r\n[keyframe completion + reference generation] The target video is a 10-second cinematic live-action vertical short video. Opening directly from the luxury indoor garage keyframe of __MINIMAX_H3_REF_3__, <Subject 1> (appearance from __MINIMAX_H3_REF_1__) wears the outerwear from __MINIMAX_H3_REF_2__, steps out of the silver-gray electric coupe, walks toward the camera, and performs an off-season winter outerwear grass-planting promotional broadcast within a 10-second timeline. Single continuous shot, natural subtle handheld realism, cool neutral color grading, no subtitles, no watermarks, no logos.\r\n\r\nretention_analysis:\r\n<Subject 1> (appears throughout [Shot 1]): fully_preserved - facial bone structure, biological features, makeup, exact hairstyle, and body proportions from __MINIMAX_H3_REF_1__ are faithfully preserved across the entire broadcast without altering hair style or length.\r\n__MINIMAX_H3_REF_1__: fully_preserved - facial bone structure, features, makeup, and exact hairstyle are preserved faithfully.\r\n__MINIMAX_H3_REF_2__: fully_preserved - apparel silhouette, cut, quilting pattern, pockets, hardware, and original fabric color/texture are faithfully preserved without distortion.\r\n__MINIMAX_H3_REF_3__ ([Shot 1] opening keyframe): fully_preserved - polished marble floor, light beige stone wall with dark marble accents, linear ceiling light strips, glass doors, and the open-door silver-gray electric coupe are preserved as opening anchor and consistent environment throughout.\r\n\r\ndetailed_description:\r\nThe target video adopts a realistic cinematography style with smartphone vertical framing (9:16), subtle handheld authenticity, cool-neutral color grading, and clean composition without subtitles, watermarks, or logos.\r\n[Shot 1] The opening frame at 00:00.000 strictly replicates the exact 1:1 camera viewpoint, lighting, and spatial layout of __MINIMAX_H3_REF_3__: a luxury indoor garage with polished marble flooring, beige stone walls with dark marble accents, embedded ceiling linear LED strips, and a silver-gray electric coupe parked on the right with its right door open. In a fixed medium-full shot, <Subject 1> (she properly wears the exact outerwear from __MINIMAX_H3_REF_2__ with both arms inserted completely inside the sleeves (faithfully maintaining 100% of its cut, silhouette, original color, fabric texture, quilting pattern, collar, placket, pockets, and hardware details exactly as shown in __MINIMAX_H3_REF_2__), with its front placket remaining fully closed and fastened completely to the top neck with zero inner shirt visible, paired with black skinny pants and black knee-high leather boots; faithfully maintaining 100% of her facial features, makeup, and exact hairstyle directly as shown in __MINIMAX_H3_REF_1__) holds a black quilted leather box bag with gold hardware in her right hand. At 00:00.500, she slowly extends one booted leg out of the open car door, lightly touching the marble floor while her right hand rests on the door interior; simultaneously, a playful, curious off-screen female voice (S1) speaks from camera direction: <d>[Chinese] 美女三伏天裹羽绒服图啥呢</d> while <Subject 1> keeps her lips completely closed, lowering her gaze naturally toward her feet. At 00:01.500, she fully steps out of the car, stands upright, and gently brings both hands to hold the box bag in front of her abdomen. From 00:02.000, she walks forward toward the camera with small, steady strides as the hem of her jacket sways gently and her gaze rises; the camera remains fixed at chest height, letting her forward motion naturally tighten the framing from medium-full to a medium shot. At 00:02.500, she halts smoothly in center frame, looks straight into the lens, and speaks with clear lip synchronization as speaker (S2): <d>[Chinese] 迷苏服装反季活动价</d>. At 00:03.500, she gently raises her left hand toward her chest, palm inward with a subtle waving gesture, smiling with teeth visible as she speaks in an upbeat, bright tone: <d>[Chinese] 低至三折</d>. At 00:04.500, she lowers her left hand naturally to her side, relaxes her smile, gives a slight nod, and keeps her lips closed in calm posture. At 00:05.500, the camera executes a gentle, slow push-in toward her outerwear as she looks down and gently strokes both sides of the jacket hem with her hands (without pulling), adopting a focused, professional expression. At 00:06.000, looking straight into the lens, she speaks: <d>[Chinese] 九零白鸭绒</d>. At 00:06.500, she lowers her hands smoothly, right hand holding the bag handle and left hand resting at her side, lifting her head with an emphasized \"O\"-shaped mouth as her eyes reconnect with the lens. At 00:07.000, the camera executes a slight, slow pull-back to medium shot; she nods gently and speaks in an assured, calculating tone: <d>[Chinese] 这价格冬天不得翻几倍呀</d>. At 00:08.000, she gives a subtle outward wave with her left hand and says in a persuasive tone: <d>[Chinese] 所以趁反季囤</d>. At 00:09.000, she folds her hands gently holding the bag in front of her abdomen, softening her tone into a warm recommendation: <d>[Chinese] 有需要可以了解</d>. At 00:09.500, she raises her left elbow, extending her left index finger steadily toward screen right while keeping her gaze locked on the lens. At 00:10.000, her body remains poised with only subtle breath movement, her lips curving into a confident smile as she delivers in a relaxed, knowing tone: <d>[Chinese] 确实香</d>, holding the final pose until the end. Linear ceiling LED lighting casts soft overhead rim highlights on her hair and shoulders, supplemented by balanced frontal fill light with zero harsh shadows, keeping the outerwear and model as the primary focal point.\r\n\r\noverall_soundscape:\r\nSubtle electric hum of linear ceiling LED strips and gentle enclosed garage acoustic reverberation throughout. Crisp rhythmic clicks of boots on polished marble tile as she steps out and walks forward, faint metallic latch sound from the car door, soft fabric rustle as the outerwear moves and is stroked, and delicate clinks of the bag's gold hardware.\r\n\r\nnon_diegetic_music:\r\nA light, upbeat mid-tempo instrumental pop track with clean electronic drum patterns, bright plucky synth melody, and rounded bassline. The rhythm remains steady, adding a percussive layer at 00:03.500 during the price reveal, and thinning out cleanly on the final holding pose.\n",
+      "resolution": "768P",
+      "aspect_ratio": "9:16",
+      "width": 1344,
+      "height": 768,
+      "seconds": 10,
+      "advanced": true,
+      "fps": 24,
+      "keyframe_role": "first",
+      "ref_image_size": "2k",
+      "reference_mention_mode": "index",
+      "prompt_optimizer_settings": false,
+      "prompt_optimizer_scene_guide": "none",
+      "h3_bundle": [
+        "6",
+        0
+      ],
+      "media_1": [
+        "18",
+        0
+      ],
+      "media_type_1": "image",
+      "media_2": [
+        "35",
+        0
+      ],
+      "media_type_2": "image",
+      "media_3": [
+        "36",
+        0
+      ],
+      "media_type_3": "image",
+      "prompt_optimizer_resources": "[{\"type\":\"image\",\"tag\":\"<Picture 1>\",\"name\":\"迷苏服饰_02.jpg\",\"asset\":{\"filename\":\"迷苏服饰_02.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 2>\",\"name\":\"8.30.jpg\",\"asset\":{\"filename\":\"8.30.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 3>\",\"name\":\"下车.jpg\",\"asset\":{\"filename\":\"下车.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 4>\",\"name\":\"3ff1d80b419c603febf8f2d3acf46f304c1ec89afd3a53e6b9a54affe988c189.jpg\",\"asset\":{\"filename\":\"3ff1d80b419c603febf8f2d3acf46f304c1ec89afd3a53e6b9a54affe988c189.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 5>\",\"name\":\"fede9c17c610f7ef1d0ccc23cbde047e449cbf5eb3d753cac50259a1e8fddcd7.jpg\",\"asset\":{\"filename\":\"fede9c17c610f7ef1d0ccc23cbde047e449cbf5eb3d753cac50259a1e8fddcd7.jpg\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"image\",\"tag\":\"<Picture 6>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"audio\",\"tag\":\"<Audio 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 1>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 2>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}},{\"type\":\"video\",\"tag\":\"<Video 3>\",\"name\":\"None\",\"asset\":{\"filename\":\"None\",\"subfolder\":\"\",\"storage\":\"input\"}}]",
+      "prompt_optimizer_marker": "{}",
+      "prompt_optimizer_prompt_connected": false
+    },
+    "class_type": "MiniMaxH3Easy",
+    "_meta": {
+      "title": "MiniMax H3 Easy"
+    }
+  },
+  "8": {
+    "inputs": {
+      "h3_context": [
+        "7",
+        1
+      ]
+    },
+    "class_type": "MiniMaxH3EasyOutput",
+    "_meta": {
+      "title": "MiniMax H3 Easy 输出"
+    }
+  },
+  "9": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 0.74,
+      "model": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "10": {
+    "inputs": {
+      "noise": [
+        "14",
+        0
+      ],
+      "guider": [
+        "11",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "8",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model": [
+        "9",
+        0
+      ],
+      "conditioning": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "14": {
+    "inputs": {
+      "noise_seed": 941082950403964
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "15": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        3
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "16": {
+    "inputs": {
+      "frame_rate": [
+        "8",
+        4
+      ],
+      "loop_count": 0,
+      "filename_prefix": "一采",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "5",
+        0
+      ],
+      "audio": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "18": {
+    "inputs": {
+      "image": "迷苏服饰_02.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "35": {
+    "inputs": {
+      "image": "8.30.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "36": {
+    "inputs": {
+      "image": "下车.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "94": {
+    "inputs": {
+      "anything": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "290": {
+    "inputs": {
+      "anything": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "293": {
+    "inputs": {
+      "anything": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  },
+  "294": {
+    "inputs": {
+      "anything": [
+        "293",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "清理显存占用"
+    }
+  }
+}
